@@ -4,7 +4,7 @@ status: collaborator
 role: ''
 grade: null
 research: ''
-affiliation: Tsinghua niversity Professor
+affiliation: Tsinghua University Professor
 homepage: ''
 photo: ''
 grad_year: null
