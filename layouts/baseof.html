@@ -10,9 +10,9 @@
   {{- range .Translations }}
   <link rel="alternate" hreflang="{{ cond (eq .Language.Lang "zh") "zh-CN" "en" }}" href="{{ .Permalink }}">
   {{- end }}
-  {{- $css := resources.Get "css/main.css" | minify | fingerprint }}
-  {{- /* 本地预览包（双击打开）里不加 integrity，否则浏览器会拦截 file:// 下的样式和脚本 */}}
-  <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ if not site.Params.noSRI }} integrity="{{ $css.Data.Integrity }}"{{ end }}>
+  {{- /* 样式和脚本用固定文件名加 ?v=版本号：网站更新后，浏览器里缓存的旧页面也能找到样式，不会出现“页面没样式、格式乱掉” */}}
+  {{- $css := resources.Get "css/main.css" | minify }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}?v={{ substr (md5 $css.Content) 0 10 }}">
 </head>
 <body>
   <a class="skip-link" href="#main">{{ T "skip" }}</a>
@@ -21,11 +21,11 @@
     {{ block "main" . }}{{ end }}
   </main>
   {{ partial "footer.html" . }}
-  {{- $js := resources.Get "js/main.js" | minify | fingerprint }}
+  {{- $js := resources.Get "js/main.js" | minify }}
   {{- if site.Params.visitCounter }}
   {{- /* 访客统计：不蒜子（busuanzi.ibruce.info），国内可访问、无需注册；不想要就把 hugo.toml 里的 visitCounter 改成 false */}}
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   {{- end }}
-  <script src="{{ $js.RelPermalink }}"{{ if not site.Params.noSRI }} integrity="{{ $js.Data.Integrity }}"{{ end }} defer></script>
+  <script src="{{ $js.RelPermalink }}?v={{ substr (md5 $js.Content) 0 10 }}" defer></script>
 </body>
 </html>
