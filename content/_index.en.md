@@ -1,8 +1,11 @@
 ---
 title: Homepage
 carousel:
-  - image: images/carousel/banner-facilities.jpg
+  - image: /images/carousel/fig01_hu_7dd3dc29043bdd03.webp
     caption: Facilities
+    link: /facilities/
+  - image: /images/carousel/fig03_hu_7cf3736961f7ed81.webp
+    caption: ''
     link: /facilities/
   - image: images/carousel/banner-thermal.jpg
     caption: Thermal Equipment Design and Optimization
