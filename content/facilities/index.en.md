@@ -1,11 +1,12 @@
 ---
-title: "Facilities"
-description: "Major experimental equipment and testing platforms of the group"
+title: Facilities
+description: Major experimental equipment and testing platforms of the group
 ---
 
 ## Scanning Thermal Microscopy System
 
 ![Scanning Thermal Microscopy System (1/2)](fig01.jpg)
+
 ![Scanning Thermal Microscopy System (2/2)](fig02.png)
 
 **Purpose**: Nanofabrication and nanomanipulation, as well as measurement of surface topography, nanoscale temperature, and local thermomechanical properties of materials
@@ -17,6 +18,7 @@ description: "Major experimental equipment and testing platforms of the group"
 ## Lock-in Infrared Thermography System
 
 ![Lock-in Infrared Thermography System (1/2)](fig03.png)
+
 ![Lock-in Infrared Thermography System (2/2)](fig04.jpg)
 
 **Purpose**: Measurement of three-dimensional anisotropic thermophysical properties of various free-standing thin films, and measurement of thermal contact resistance
@@ -30,7 +32,9 @@ description: "Major experimental equipment and testing platforms of the group"
 ## Thermoelectric Property Measurement System for Micro/Nano Wires
 
 ![Thermoelectric Property Measurement System for Micro/Nano Wires (1/3)](fig05.jpg)
+
 ![Thermoelectric Property Measurement System for Micro/Nano Wires (2/3)](fig06.jpg)
+
 ![Thermoelectric Property Measurement System for Micro/Nano Wires (3/3)](fig07.png)
 
 **Purpose**: Measurement of thermoelectric properties of various fiber samples
@@ -48,13 +52,12 @@ description: "Major experimental equipment and testing platforms of the group"
 ### Hall Effect Measurement System
 
 ![Hall Effect Measurement System (1/2)](fig08.png)
+
 ![Hall Effect Measurement System (2/2)](fig09.png)
 
 **Purpose**: Measurement of carrier concentration and mobility of thin films
 
 **Specifications**: Central magnetic field of 2 T; temperature range of 80–500 K
-
-{{< todo "Images and specifications for the following equipment are to be added" >}}
 
 - Infrared thermal camera
 - Probe station
