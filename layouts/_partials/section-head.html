@@ -1,0 +1,16 @@
+{{- /* 有子菜单的栏目（团队成员、研究成果）：大标题用栏目名，下面是子页面标签；其他页面用普通标题 */ -}}
+{{- $page := . -}}
+{{- $parent := false -}}
+{{- range site.Menus.main }}{{ if and .HasChildren (or ($page.IsMenuCurrent "main" .) ($page.HasMenuCurrent "main" .)) }}{{ $parent = . }}{{ end }}{{ end -}}
+{{- if $parent }}
+<div class="sec-title">
+  <h1>{{ $parent.Name }}{{ if eq site.Language.Lang "zh" }}{{ with $parent.Params.en }} <small>{{ . }}</small>{{ end }}{{ end }}</h1>
+</div>
+<nav class="tabs" aria-label="{{ $parent.Name }}">
+  {{- range $parent.Children }}
+  <a href="{{ .URL }}"{{ if $page.IsMenuCurrent "main" . }} aria-current="page"{{ end }}>{{ .Name }}</a>
+  {{- end }}
+</nav>
+{{- else }}
+{{ partial "page-title.html" . }}
+{{- end }}

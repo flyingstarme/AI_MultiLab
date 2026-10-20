@@ -1,0 +1,27 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "page-title.html" . }}
+  {{- if not .Pages }}{{ partial "todo.html" (T "todo_album") }}{{ end }}
+  {{- range .Pages.ByDate.Reverse.GroupByDate "2006" }}
+  <section class="album-year">
+    <h2 class="pub-year">{{ .Key }}</h2>
+    <div class="card-grid">
+      {{- range .Pages }}
+      {{- $album := . }}
+      {{- $photos := partial "album-photos.html" . }}
+      <a class="card" href="{{ .RelPermalink }}">
+        {{- with index $photos 0 }}
+        {{- $im := partial "image.html" (dict "page" $album "src" .src "op" "fill" "spec" "600x400 Center") }}
+        <img class="card-img" src="{{ $im.src }}" alt="" width="600" height="400" loading="lazy">
+        {{- end }}
+        <span class="card-body">
+          <h3>{{ .Title }}</h3>
+          <span class="card-meta">{{ .Date.Format "2006-01-02" }} · {{ T "photos" (dict "Count" (len $photos)) }}</span>
+        </span>
+      </a>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+</div>
+{{ end }}

@@ -1,0 +1,10 @@
+<a class="card" href="{{ .RelPermalink }}">
+  {{- $im := partial "image.html" (dict "page" . "src" .Params.cover "op" "fit" "spec" "800x500") }}
+  {{- with $im.src }}<span class="card-img-box"><img class="card-img contain" src="{{ . }}" alt=""{{ with $im.w }} width="{{ . }}" height="{{ $im.h }}"{{ end }} loading="lazy"></span>{{ end }}
+  <span class="card-body">
+    <h3>{{ .Title }}</h3>
+    {{- with .Params.topics }}
+    <ul class="topic-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+    {{- end }}
+  </span>
+</a>

@@ -1,0 +1,6 @@
+<div class="pub-filter" data-target="#pub-body" role="group" aria-label="{{ T "filter_label" }}">
+  <button type="button" data-filter="all" aria-pressed="true">{{ T "filter_all" }}</button>
+  {{- range (site.GetPage "/research").Pages.ByWeight }}
+  <button type="button" data-filter="{{ .File.ContentBaseName }}" aria-pressed="false">{{ .Title }}</button>
+  {{- end }}
+</div>

@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="container page article">
+  <p class="breadcrumb"><a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a> &rsaquo; {{ T "article" }}</p>
+  <div class="sec-title"><h1>{{ .Title }}</h1></div>
+  <p class="article-meta">{{ T "published" }}{{ T "colon" }}{{ .Date.Format "2006-01-02" }}</p>
+  <div class="prose">
+    {{ .Content }}
+  </div>
+  <nav class="pager" aria-label="{{ T "news_nav" }}">
+    {{- with .NextInSection }}<a href="{{ .RelPermalink }}">&lsaquo; {{ .Title }}</a>{{ else }}<span></span>{{ end }}
+    {{- with .PrevInSection }}<a href="{{ .RelPermalink }}">{{ .Title }} &rsaquo;</a>{{ end }}
+  </nav>
+</div>
+{{ end }}

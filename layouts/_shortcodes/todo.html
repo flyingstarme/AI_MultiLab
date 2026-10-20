@@ -1,0 +1,2 @@
+{{- /* 用法：{{< todo "待补充的说明" >}}。hugo.toml 里 showTodo = false 时不显示。 */ -}}
+{{- if site.Params.showTodo }}<span class="todo todo-block">{{ .Get 0 }}</span>{{ end -}}

@@ -1,0 +1,5 @@
+{{- /* 取 data/site.yaml 里的文字；英文页面优先用 xxx_en，没填就用中文 */ -}}
+{{- $s := hugo.Data.site -}}
+{{- $v := index $s . -}}
+{{- if eq site.Language.Lang "en" }}{{ with index $s (printf "%s_en" .) }}{{ $v = . }}{{ end }}{{ end -}}
+{{- return $v -}}

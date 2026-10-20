@@ -1,0 +1,14 @@
+# 站点基本信息（可在“管理”后台的“页面与设置 → 站点设置”里修改）
+# 带 _en 的是英文版用的文字，留空时英文页面显示中文。
+name: "AI_MultiLab"
+full_name: "智能赋能多物理场分析与检测实验室"
+full_name_en: "AI-Empowered Multiphysics Analysis and Testing Laboratory"
+affiliation: "东南大学 机械工程学院"
+affiliation_en: "School of Mechanical Engineering, Southeast University"
+# 首页“课题组简介”
+intro: "我们课题组主要从事多物理场测试系统开发与应用、热工装备设计与优化、智能分析与轻量化部署三个方向的研究，致力于打通“精密测量—优化设计—智能分析”的完整链条，欢迎机电、能源与人工智能交叉研究感兴趣的同学来课题组开展研究或攻读学位，也欢迎各位同行交流、合作。"
+intro_en: "Our group works on three research directions: development and application of multiphysics measurement systems, design and optimization of thermal equipment, and intelligent analysis with lightweight deployment. We aim to connect the full chain of precision measurement, optimal design and intelligent analysis. Students interested in interdisciplinary research across mechatronics, energy and artificial intelligence are welcome to join us for research or graduate study, and we welcome exchanges and collaboration with colleagues."
+email: "wangjianli@seu.edu.cn"
+wechat: "Jianli05"
+address: "南京市江宁区东南大学九龙湖校区机械工程学院 机械楼517室"
+address_en: "Room 517, Mechanical Engineering Building, School of Mechanical Engineering, Southeast University (Jiulonghu Campus), Jiangning District, Nanjing, China"

@@ -1,0 +1,27 @@
+{{- /*
+  查找并处理图片。参数：
+    page  图片所在页面（先在页面自己的文件夹里找，再到 assets/ 里找；都找不到就当成 static/ 里的普通路径）
+    src   图片路径
+    op    "fill"（裁成固定尺寸）或 "fit"（等比缩小）
+    spec  尺寸，如 "600x450 Center"
+    zoom  为 true 时额外生成一张点开看的大图
+  返回 dict：src、w、h（处理后的图片）、orig（大图）。统一输出 WebP：体积小，支持透明背景。
+*/ -}}
+{{- $out := dict -}}
+{{- with .src -}}
+  {{- $p := strings.TrimPrefix "/" . -}}
+  {{- $res := "" -}}
+  {{- with $.page }}{{ with .Resources.Get $p }}{{ $res = . }}{{ end }}{{ end -}}
+  {{- if not $res }}{{ with resources.Get $p }}{{ $res = . }}{{ end }}{{ end -}}
+  {{- if and $res (in (slice "jpeg" "png" "webp") $res.MediaType.SubType) -}}
+    {{- $img := "" -}}
+    {{- if eq $.op "fill" }}{{ $img = $res.Fill (printf "%s webp" $.spec) }}{{ else }}{{ $img = $res.Fit (printf "%s webp" ($.spec | default "1600x1600")) }}{{ end -}}
+    {{- $out = dict "src" $img.RelPermalink "w" $img.Width "h" $img.Height -}}
+    {{- if $.zoom }}{{ $out = merge $out (dict "orig" ($res.Fit "1920x1600 webp").RelPermalink) }}{{ end -}}
+  {{- else if $res -}}
+    {{- $out = dict "src" $res.RelPermalink "orig" $res.RelPermalink -}}
+  {{- else -}}
+    {{- $out = dict "src" ($p | relURL) "orig" ($p | relURL) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

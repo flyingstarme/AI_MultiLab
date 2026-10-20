@@ -1,0 +1,37 @@
+{{- $name := partial "site-text.html" "name" -}}
+{{- $isZh := eq site.Language.Lang "zh" -}}
+{{- /* 语言切换：有对应译文就跳到译文页，没有就跳到另一种语言的首页 */ -}}
+{{- $target := "" -}}
+{{- range first 1 .Translations }}{{ $target = .RelPermalink }}{{ end -}}
+{{- if not $target }}{{ range hugo.Sites }}{{ if ne .Language.Lang site.Language.Lang }}{{ $target = .Home.RelPermalink }}{{ end }}{{ end }}{{ end -}}
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ site.Home.RelPermalink }}" aria-label="{{ $name }} {{ T "home_label" }}">
+      {{- with resources.Get "images/logo.png" }}<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="{{ $name }}">{{ end -}}
+    </a>
+    <div class="header-right">
+      {{- with $target }}<a class="lang-switch" href="{{ . }}" lang="{{ cond $isZh "en" "zh-CN" }}">{{ cond $isZh "English" "中文" }}</a>{{ end }}
+      <p class="header-motto">{{ partial "site-text.html" "full_name" }}<small>{{ partial "site-text.html" "affiliation" }}</small></p>
+    </div>
+  </div>
+</header>
+<nav class="site-nav" aria-label="{{ T "main_nav" }}">
+  <div class="container">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="nav-toggle-icon" aria-hidden="true"></span>{{ T "menu" }}</button>
+    <ul id="nav-menu">
+      {{- $page := . }}
+      {{- range site.Menus.main }}
+      {{- $active := or ($page.IsMenuCurrent "main" .) ($page.HasMenuCurrent "main" .) }}
+      <li{{ if .HasChildren }} class="has-sub"{{ end }}><a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
+        {{- if .HasChildren }}
+        <ul class="sub-menu">
+          {{- range .Children }}
+          <li><a href="{{ .URL }}"{{ if $page.IsMenuCurrent "main" . }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+          {{- end }}
+        </ul>
+        {{- end }}
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</nav>

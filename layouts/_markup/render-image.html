@@ -1,0 +1,5 @@
+{{- /* 正文里的图片：自动缩小，点击可放大；同一段里的多张图并排显示 */ -}}
+{{- $alt := .PlainText -}}
+{{- $im := partial "image.html" (dict "page" .Page "src" .Destination "op" "fit" "spec" "1000x800" "zoom" true) -}}
+<a class="pic" href="{{ $im.orig }}" data-lightbox="content" data-caption="{{ $alt }}"><img src="{{ $im.src }}" alt="{{ $alt }}"{{ with $im.w }} width="{{ . }}" height="{{ $im.h }}"{{ end }} loading="lazy" decoding="async"></a>
+{{- /* 去掉末尾换行，避免并排图片之间多出空隙 */ -}}

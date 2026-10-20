@@ -1,0 +1,11 @@
+{
+  "_说明": "管理后台账号。每个账号对应一个用其密码加密的 GitHub 令牌。用仓库里的 tools/make-account.html 生成，把生成的内容加到 accounts 里即可。",
+  "accounts": {
+    "wonder": {
+      "salt": "sxOn7DCnKJeZSywjXTb+Sg==",
+      "iv": "Mq2Dzk4cV0ylfC2f",
+      "iterations": 600000,
+      "data": "35NdqdU+Xp4wTGRYZPmDcsWvQCEt6L6Q0+PF+NI8u20M/WSSXMDQ8VecWINRXzhIUZ3FR7mFsH7oBDmuh1J2cgio7lnoVJschGKEhyHOVDrQyTFMUawbJ1V2Yg0UkwLIRRXGcIraGIsmUolfIA=="
+    }
+  }
+}

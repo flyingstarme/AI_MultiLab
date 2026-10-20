@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="container page">
+  <p class="breadcrumb"><a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a> &rsaquo; {{ .Title }}</p>
+  <div class="sec-title"><h1>{{ .Title }}</h1></div>
+  <div class="prose">
+    {{ .Content }}
+  </div>
+  <nav class="pager" aria-label="{{ T "other_dirs" }}">
+    {{- $all := .Parent.Pages.ByWeight }}
+    {{- with $all.Prev . }}<a href="{{ .RelPermalink }}">&lsaquo; {{ .Title }}</a>{{ else }}<span></span>{{ end }}
+    {{- with $all.Next . }}<a href="{{ .RelPermalink }}">{{ .Title }} &rsaquo;</a>{{ end }}
+  </nav>
+</div>
+{{ end }}

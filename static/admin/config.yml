@@ -1,0 +1,279 @@
+# 网站“管理”后台（Sveltia CMS）配置
+# 文档：https://sveltiacms.app/en/docs
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.248.0/schema/sveltia-cms.json
+
+backend:
+  name: github
+  # 网站仓库：王建立老师的 GitHub 账号 flyingstarme 下的 AI_MultiLab
+  repo: flyingstarme/AI_MultiLab
+  branch: main
+
+# 全局上传目录（个别栏目在下面单独指定，图片和文字放在同一个文件夹）
+media_folder: /static/uploads
+public_folder: /uploads
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 20971520 # 单个文件上限 20 MB
+      transformations:
+        # 上传的照片在浏览器里自动转成 WebP 并缩小，避免仓库变大
+        raster_image:
+          format: webp
+          quality: 82
+          width: 2000
+          height: 2000
+
+# 网址里不出现中文
+slug:
+  encoding: ascii
+  clean_accents: true
+
+# 中英双语：中文是 index.md，英文是同一文件夹里的 index.en.md
+i18n:
+  structure: multiple_files
+  locales: [zh, en]
+  default_locale: zh
+  omit_default_locale_from_file_path: true
+
+collections:
+  # ------------------------------------------------------------ 新闻
+  - name: news
+    label: 新闻
+    label_singular: 新闻
+    description: 新增的新闻会自动出现在首页滚动新闻和新闻页面。中文、英文分别填写。
+    folder: /content/news
+    path: '{{slug}}/index'
+    slug: '{{year}}{{month}}{{day}}-{{hour}}{{minute}}'
+    media_folder: ''
+    public_folder: ''
+    create: true
+    i18n: true
+    summary: '{{title}}'
+    sortable_fields:
+      fields: [date, title]
+      default: { field: date, direction: descending }
+    editor: { preview: false }
+    fields:
+      - { name: title, label: 标题, i18n: true }
+      - { name: date, label: 日期, widget: datetime, time_format: false, format: YYYY-MM-DD, i18n: duplicate }
+      - { name: summary, label: 摘要, hint: 新闻列表里显示的一两句话，可留空, widget: text, required: false, i18n: true }
+      - { name: cover, label: 封面图, hint: 新闻列表里的缩略图，可留空, widget: image, required: false, i18n: duplicate }
+      - { name: body, label: 正文, hint: 可以直接把图片拖进来, widget: richtext, i18n: true }
+
+  # ------------------------------------------------------------ 相册
+  - name: album
+    label: 相册
+    label_singular: 相册
+    description: 每次活动建一个相册，照片可以一次多选上传。
+    folder: /content/album
+    path: '{{slug}}/index'
+    slug: '{{year}}{{month}}{{day}}-{{hour}}{{minute}}'
+    media_folder: ''
+    public_folder: ''
+    create: true
+    i18n: true
+    summary: '{{title}}'
+    sortable_fields:
+      fields: [date, title]
+      default: { field: date, direction: descending }
+    editor: { preview: false }
+    fields:
+      - { name: title, label: 相册名称, i18n: true }
+      - { name: date, label: 活动日期, widget: datetime, time_format: false, format: YYYY-MM-DD, i18n: duplicate }
+      - { name: description, label: 简短说明, widget: text, required: false, i18n: true }
+      - { name: photos, label: 照片, hint: 可以一次选择多张；第一张作为封面, widget: image, multiple: true, i18n: duplicate }
+
+  # ------------------------------------------------------------ 论文
+  - name: publications
+    label: 论文
+    label_singular: 论文
+    description: 科研成果页面按年份自动排列。论文信息中英文共用，只需填一次。
+    folder: /content/publications
+    slug: 'p{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}'
+    create: true
+    i18n: true
+    identifier_field: citation
+    summary: '{{year}}｜{{citation}}'
+    sortable_fields:
+      fields: [year, order]
+      default: { field: year, direction: descending }
+    editor: { preview: false }
+    fields:
+      - { name: year, label: 年份, widget: number, value_type: int, i18n: duplicate }
+      - name: direction
+        label: 研究方向
+        widget: select
+        i18n: duplicate
+        options:
+          - { label: 多物理场测试系统开发与应用, value: multiphysics }
+          - { label: 热工装备设计与优化, value: thermal-equipment }
+          - { label: 智能分析与轻量化部署, value: intelligent-analysis }
+      - { name: topic, label: 细分方向, hint: 可留空, required: false, i18n: true }
+      - name: citation
+        label: 引用信息
+        widget: text
+        i18n: duplicate
+        hint: '按“作者, 题目, 期刊 年份, 卷: 页码”的格式填写；王老师的名字两边加 ** 会显示为粗体，例如 **Wang J L**\*'
+      - { name: link, label: 链接, hint: DOI 或论文网址，可留空, required: false, i18n: duplicate }
+      - { name: order, label: 同一年内的排序, hint: 数字小的排在前面；新论文填 0 即排在该年最前, widget: number, value_type: int, default: 0, i18n: duplicate }
+
+  # ------------------------------------------------------------ 科研项目
+  - name: projects
+    label: 科研项目
+    label_singular: 项目
+    description: 显示在科研成果页面底部。
+    folder: /content/projects
+    slug: 'p{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}'
+    create: true
+    i18n: true
+    summary: '{{category}}｜{{title}}'
+    editor: { preview: false }
+    fields:
+      - { name: title, label: 项目名称, i18n: true }
+      - { name: category, label: 类别, widget: select, options: [国家自然科学基金, 校企合作项目, 技装项目, 其他], i18n: duplicate }
+      - { name: period, label: 起止时间, hint: 例如 2024.1-2027.12, required: false, i18n: duplicate }
+      - name: direction
+        label: 研究方向
+        widget: select
+        i18n: duplicate
+        options:
+          - { label: 多物理场测试系统开发与应用, value: multiphysics }
+          - { label: 热工装备设计与优化, value: thermal-equipment }
+          - { label: 智能分析与轻量化部署, value: intelligent-analysis }
+      - { name: order, label: 排序, hint: 数字小的排在前面, widget: number, value_type: int, default: 0, i18n: duplicate }
+
+  # ------------------------------------------------------------ 团队成员
+  - name: members
+    label: 团队成员
+    label_singular: 成员
+    description: 学生毕业后，把“状态”改成“已毕业”并填写去向即可。英文姓名用拼音。
+    folder: /content/members
+    path: '{{slug}}/index'
+    slug: 'm{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}'
+    media_folder: ''
+    public_folder: ''
+    create: true
+    i18n: true
+    summary: '{{title}}（{{role}}{{grad_year}}）'
+    editor: { preview: false }
+    fields:
+      - { name: title, label: 姓名, i18n: true }
+      - name: status
+        label: 状态
+        widget: select
+        default: current
+        i18n: duplicate
+        options:
+          - { label: 在读, value: current }
+          - { label: 已毕业, value: alumni }
+      - { name: role, label: 身份（在读）, widget: select, required: false, options: [博士后, 博士研究生, 硕士研究生, 本科生, 访问学者], i18n: duplicate }
+      - { name: grade, label: 入学年级, hint: 例如 2025, widget: number, value_type: int, required: false, i18n: duplicate }
+      - { name: research, label: 研究方向, required: false, i18n: true }
+      - { name: photo, label: 照片, widget: image, required: false, i18n: duplicate }
+      - { name: grad_year, label: 毕业年份（已毕业）, widget: number, value_type: int, required: false, i18n: duplicate }
+      - { name: degree, label: 学位（已毕业）, widget: select, required: false, options: [博士, 硕士, 学士], i18n: duplicate }
+      - { name: destination, label: 去向（已毕业）, required: false, i18n: true }
+      - { name: thesis, label: 学位论文题目（已毕业）, required: false, i18n: true }
+      - { name: honors, label: 荣誉, widget: list, required: false, i18n: true }
+      - { name: order, label: 排序, hint: 数字小的排在前面, widget: number, value_type: int, default: 100, i18n: duplicate }
+
+  # ------------------------------------------------------------ 研究方向
+  - name: research
+    label: 研究方向
+    label_singular: 研究方向
+    folder: /content/research
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
+    create: false
+    i18n: true
+    summary: '{{title}}'
+    sortable_fields:
+      fields: [weight, title]
+      default: { field: weight, direction: ascending }
+    editor: { preview: false }
+    fields:
+      - { name: title, label: 方向名称, i18n: true }
+      - { name: weight, label: 排序, widget: number, value_type: int, i18n: duplicate }
+      - { name: cover, label: 卡片配图, widget: image, i18n: duplicate }
+      - { name: summary, label: 简介, widget: text, i18n: true }
+      - { name: topics, label: 子方向, widget: list, i18n: true }
+      - { name: body, label: 正文, hint: 图片可以直接拖进来；同一段里的几张图会并排显示；单独一行的斜体文字显示为图注, widget: richtext, i18n: true }
+
+  # ------------------------------------------------------------ 单页与设置
+  - name: pages
+    label: 页面与设置
+    editor: { preview: false }
+    i18n: true
+    files:
+      - name: site
+        label: 站点设置（简介、邮箱、地址）
+        file: /data/site.yaml
+        i18n: false
+        fields:
+          - { name: name, label: 课题组名称 }
+          - { name: affiliation, label: 单位 }
+          - { name: affiliation_en, label: 单位（英文）, required: false }
+          - { name: motto, label: 页头标语 }
+          - { name: motto_en, label: 页头标语（英文）, required: false }
+          - { name: intro, label: 首页“课题组简介”, widget: text }
+          - { name: intro_en, label: 首页“课题组简介”（英文）, widget: text, required: false }
+          - { name: email, label: 联系邮箱 }
+          - { name: address, label: 通讯地址, required: false }
+          - { name: address_en, label: 通讯地址（英文）, required: false }
+      - name: home
+        label: 首页轮播图
+        file: '/content/_index.{{locale}}.md'
+        i18n: true
+        media_folder: /assets/images/carousel
+        public_folder: images/carousel
+        fields:
+          - { name: title, label: 标题, widget: hidden, i18n: true }
+          - name: carousel
+            label: 轮播图
+            widget: list
+            i18n: true
+            summary: '{{fields.caption}}'
+            fields:
+              - { name: image, label: 图片, hint: 建议横向图片，宽高比约 11:4, widget: image, i18n: duplicate }
+              - { name: caption, label: 图上文字, required: false, i18n: true }
+              - { name: link, label: 点击后打开的页面, hint: 例如 /research/multiphysics/ ，可留空, required: false, i18n: duplicate }
+          - { name: news_count, label: 首页显示几条新闻, widget: number, value_type: int, default: 8, i18n: duplicate }
+      - name: pi
+        label: 负责人介绍
+        file: '/content/pi/index.{{locale}}.md'
+        i18n: true
+        media_folder: /content/pi
+        public_folder: ''
+        fields:
+          - { name: title, label: 页面标题, widget: hidden, i18n: true }
+          - { name: name, label: 姓名, i18n: true }
+          - { name: position, label: 职称, i18n: true }
+          - { name: affiliation, label: 单位, i18n: true }
+          - { name: photo, label: 照片, widget: image, i18n: duplicate }
+          - { name: email, label: 邮箱, i18n: duplicate }
+          - { name: phone, label: 电话, hint: 留空则不显示, required: false, i18n: duplicate }
+          - { name: scholar, label: Google Scholar 链接, required: false, i18n: duplicate }
+          - { name: summary, label: 首页卡片上的简短介绍, widget: text, i18n: true }
+          - { name: body, label: 详细介绍, widget: richtext, i18n: true }
+      - name: facilities
+        label: 实验平台
+        file: '/content/facilities/index.{{locale}}.md'
+        i18n: true
+        media_folder: /content/facilities
+        public_folder: ''
+        fields:
+          - { name: title, label: 页面标题, widget: hidden, i18n: true }
+          - { name: description, label: 页面描述, widget: hidden, i18n: true }
+          - { name: body, label: 正文, hint: 图片可以直接拖进来, widget: richtext, i18n: true }
+      - name: join
+        label: 加入我们
+        file: '/content/join/index.{{locale}}.md'
+        i18n: true
+        media_folder: /content/join
+        public_folder: ''
+        fields:
+          - { name: title, label: 页面标题, widget: hidden, i18n: true }
+          - { name: description, label: 页面描述, widget: hidden, i18n: true }
+          - { name: body, label: 正文, widget: richtext, i18n: true }

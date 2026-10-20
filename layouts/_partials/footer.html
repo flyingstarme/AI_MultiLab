@@ -1,0 +1,15 @@
+{{- $name := partial "site-text.html" "name" -}}
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-contact">
+      <p><strong>{{ $name }}</strong> · {{ partial "site-text.html" "affiliation" }}</p>
+      <p>{{ T "email" }}{{ T "colon" }}{{ with partial "site-text.html" "email" }}<a href="mailto:{{ . }}">{{ . }}</a>{{ end }}</p>
+      <p>{{ T "address" }}{{ T "colon" }}{{ with partial "site-text.html" "address" }}{{ . }}{{ else }}{{ partial "todo.html" (T "todo_address") }}{{ end }}</p>
+    </div>
+    <div class="footer-meta">
+      <p>© {{ now.Year }} {{ $name }}</p>
+      <p>{{ T "last_updated" }}{{ T "colon" }}{{ now.Format "2006-01-02" }}</p>
+      <p><a class="footer-admin" href="{{ "admin/" | relURL }}">{{ T "admin" }}</a></p>
+    </div>
+  </div>
+</footer>

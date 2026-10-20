@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "page-title.html" . }}
+  <div class="prose lead-prose">{{ .Content }}</div>
+  <div class="card-grid">
+    {{- range .Pages.ByWeight }}{{ partial "research-card.html" . }}{{ end }}
+  </div>
+</div>
+{{ end }}

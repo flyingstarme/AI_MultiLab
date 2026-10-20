@@ -1,0 +1,5 @@
+{{- /* 成员身份、学位、项目类别在文件里存的是中文值，这里按当前语言显示 */ -}}
+{{- $m := dict "博士后" "role_postdoc" "博士研究生" "role_phd" "硕士研究生" "role_master" "本科生" "role_undergrad" "访问学者" "role_visiting" "博士" "degree_phd" "硕士" "degree_master" "学士" "degree_bachelor" "国家自然科学基金" "cat_nsfc" "校企合作项目" "cat_industry" "技装项目" "cat_equip" "其他" "cat_other" -}}
+{{- $out := . -}}
+{{- with index $m . }}{{ $out = T . }}{{ end -}}
+{{- return $out -}}

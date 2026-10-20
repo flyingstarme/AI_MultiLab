@@ -1,0 +1,15 @@
+{{ define "main" }}
+<div class="container page">
+  <p class="breadcrumb"><a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a> &rsaquo; {{ .Title }}</p>
+  <div class="sec-title"><h1>{{ .Title }}</h1></div>
+  <p class="article-meta">{{ .Date.Format "2006-01-02" }}{{ with .Params.description }} · {{ . }}{{ end }}</p>
+  {{- $photos := partial "album-photos.html" . }}
+  <div class="photo-grid">
+    {{- range $photos }}
+    {{- $im := partial "image.html" (dict "page" $ "src" .src "op" "fill" "spec" "480x360 Center" "zoom" true) }}
+    <a href="{{ $im.orig }}" data-lightbox="album" data-caption="{{ .caption }}"><img src="{{ $im.src }}" alt="{{ .caption | default $.Title }}" width="480" height="360" loading="lazy"></a>
+    {{- end }}
+  </div>
+  {{- with .Content }}<div class="prose album-text">{{ . }}</div>{{ end }}
+</div>
+{{ end }}

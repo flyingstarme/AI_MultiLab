@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "page-title.html" . }}
+  <div class="prose">
+    {{ .Content }}
+  </div>
+  {{- if eq .Section "join" }}
+  <div class="contact-box">
+    <h2>{{ T "contact" }}</h2>
+    {{- with site.GetPage "/pi" }}<p>{{ T "pi_contact" (dict "Name" .Params.name) }}</p>{{ end }}
+    <p>{{ T "email" }}{{ T "colon" }}{{ with partial "site-text.html" "email" }}<a href="mailto:{{ . }}">{{ . }}</a>{{ end }}</p>
+    {{- with partial "site-text.html" "wechat" }}<p>{{ T "wechat" }}{{ T "colon" }}{{ . }}</p>{{ end }}
+  </div>
+  {{- end }}
+</div>
+{{ end }}

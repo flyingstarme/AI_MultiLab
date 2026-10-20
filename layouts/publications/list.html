@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "section-head.html" . }}
+  {{- with site.GetPage "/pi" }}{{ with .Params.scholar }}
+  <p class="lead">{{ T "scholar_before" }}<a href="{{ . }}" target="_blank" rel="noopener">{{ T "scholar_link" }}</a>{{ T "scholar_after" }}</p>
+  {{- end }}{{ end }}
+  {{ partial "direction-filter.html" . }}
+
+  <div id="pub-body">
+    {{- $pubs := .RegularPages }}
+    {{- $years := slice }}
+    {{- range $pubs }}{{ $years = $years | append (int .Params.year) }}{{ end }}
+    {{- range sort (uniq $years) "value" "desc" }}
+    {{- $y := . }}
+    <div class="pub-block">
+      <h2 class="pub-year">{{ $y }}</h2>
+      <ol class="pub-list">
+        {{- range sort (where $pubs "Params.year" "eq" $y) "Params.order" }}
+        <li data-direction="{{ .Params.direction }}">{{ .Params.citation | markdownify }}{{ with .Params.link }} <a class="pub-link" href="{{ . }}" target="_blank" rel="noopener">[{{ T "link" }}]</a>{{ end }}</li>
+        {{- end }}
+      </ol>
+    </div>
+    {{- end }}
+  </div>
+</div>
+{{ end }}

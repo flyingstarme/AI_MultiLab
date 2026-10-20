@@ -1,0 +1,5 @@
+{{- /* 参数：title, en（中文页面上标题后面的英文小字）, more（链接）, moreText, accent（橙色下划线）, id */ -}}
+<div class="sec-title{{ if .accent }} accent{{ end }}">
+  <h2{{ with .id }} id="{{ . }}"{{ end }}>{{ .title }}{{ if eq site.Language.Lang "zh" }}{{ with .en }} <small>{{ . }}</small>{{ end }}{{ end }}</h2>
+  {{- with .more }}<a class="more" href="{{ . }}">{{ $.moreText | default (T "more") }} &rsaquo;</a>{{ end }}
+</div>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>生成管理后台账号</title>
+  <style>
+    body { max-width: 680px; margin: 40px auto; padding: 0 16px; font: 15px/1.8 "Microsoft YaHei", "PingFang SC", sans-serif; color: #333; }
+    h1 { color: #2C405D; font-size: 22px; }
+    label { display: block; margin: 12px 0; }
+    input, textarea { box-sizing: border-box; width: 100%; padding: 8px; border: 1px solid #C9D3E0; border-radius: 4px; font: 14px monospace; }
+    button { padding: 8px 20px; border: 0; border-radius: 4px; background: #3B78B5; color: #fff; font: inherit; cursor: pointer; }
+    .note { padding: 10px 14px; background: #F3F6FA; border-left: 4px solid #3B78B5; font-size: 14px; }
+    .err { color: #C0392B; }
+  </style>
+</head>
+<body>
+  <h1>生成管理后台账号</h1>
+  <div class="note">
+    <p>这个页面只在你自己的浏览器里运行，不会把任何内容发到网上。用法：</p>
+    <ol>
+      <li>先在 GitHub 生成一个细粒度令牌（Fine-grained personal access token）：Repository access 只选网站仓库，Permissions 里 Contents 设为 Read and write（要用它推送代码时再加 Workflows: Read and write），有效期 1 年。</li>
+      <li>在下面填账号（建议用姓名拼音，小写）、密码（至少 8 位，建议 12 位以上）和令牌，点“生成”。</li>
+      <li>把生成的那一行加进网站仓库 <code>static/admin/accounts.json</code> 的 <code>accounts</code> 里，提交即可。改密码也是重新生成一次、替换这一行。</li>
+    </ol>
+  </div>
+  <label>账号<input id="u" placeholder="例如 wangjianli" autocomplete="off"></label>
+  <label>密码<input id="p" type="password" autocomplete="new-password"></label>
+  <label>再输一次密码<input id="p2" type="password" autocomplete="new-password"></label>
+  <label>GitHub 令牌<input id="t" placeholder="github_pat_..." autocomplete="off"></label>
+  <button id="go" type="button">生成</button>
+  <p class="err" id="err"></p>
+  <label>生成结果（复制到 accounts.json 的 accounts 里）<textarea id="out" rows="6" readonly></textarea></label>
+  <script>
+    function b64(bytes) { var s = ''; bytes = new Uint8Array(bytes); for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]); return btoa(s); }
+    document.getElementById('go').addEventListener('click', async function () {
+      var err = document.getElementById('err'), out = document.getElementById('out');
+      err.textContent = ''; out.value = '';
+      var u = document.getElementById('u').value.trim().toLowerCase();
+      var p = document.getElementById('p').value, p2 = document.getElementById('p2').value;
+      var t = document.getElementById('t').value.trim();
+      if (!/^[a-z0-9._-]{2,40}$/.test(u)) return (err.textContent = '账号只能用小写字母、数字和 . _ -');
+      if (p.length < 8) return (err.textContent = '密码至少 8 位');
+      if (p !== p2) return (err.textContent = '两次输入的密码不一致');
+      if (!/^(github_pat_|ghp_)/.test(t)) return (err.textContent = '令牌格式不对，应以 github_pat_ 开头');
+      var iterations = 600000;
+      var salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+      var base = await crypto.subtle.importKey('raw', new TextEncoder().encode(p), 'PBKDF2', false, ['deriveKey']);
+      var key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: salt, iterations: iterations, hash: 'SHA-256' },
+        base, { name: 'AES-GCM', length: 256 }, false, ['encrypt']);
+      var data = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, new TextEncoder().encode(t));
+      out.value = JSON.stringify(u) + ': ' + JSON.stringify({ salt: b64(salt), iv: b64(iv), iterations: iterations, data: b64(data) });
+      out.select();
+      if (p.length < 12) err.textContent = '已生成。提示：密码少于 12 位，建议以后换成更长的密码（加密后的账号文件是公开的）。';
+    });
+  </script>
+</body>
+</html>

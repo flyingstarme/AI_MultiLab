@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>网站管理 | AI_MultiLab</title>
+  <style>
+    body { margin: 0; font: 16px/1.7 -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; color: #333; background: #EEF3F9; }
+    .login { box-sizing: border-box; max-width: 380px; margin: 10vh auto 0; padding: 32px 28px 24px; border-top: 4px solid #3B78B5; border-radius: 6px; background: #fff; box-shadow: 0 8px 28px rgba(30, 60, 100, .14); }
+    .login img { display: block; height: 40px; margin: 0 auto 10px; }
+    .login h1 { margin: 0 0 20px; color: #2C405D; font-size: 20px; text-align: center; }
+    .login label { display: block; margin-bottom: 14px; font-size: 14px; color: #555; }
+    .login input { box-sizing: border-box; width: 100%; margin-top: 4px; padding: 9px 10px; border: 1px solid #C9D3E0; border-radius: 4px; font: inherit; }
+    .login input:focus { outline: 2px solid #3B78B5; outline-offset: -1px; border-color: #3B78B5; }
+    .login button { width: 100%; margin-top: 6px; padding: 10px; border: 0; border-radius: 4px; background: linear-gradient(#4585C6, #3B78B5); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+    .login button:disabled { opacity: .6; cursor: wait; }
+    .msg { min-height: 1.7em; margin: 10px 0 0; color: #C0392B; font-size: 14px; text-align: center; }
+    .hint { margin: 14px 0 0; color: #888; font-size: 13px; text-align: center; }
+    .hint a { color: #1F5FAF; }
+  </style>
+</head>
+<body>
+  <!-- 登录页：账号 + 密码。验证方式：用密码在浏览器里解开 accounts.json 中这个账号对应的 GitHub 令牌，
+       再交给管理后台（Sveltia CMS）登录。整个过程只在浏览器里完成，不经过任何服务器。
+       新增账号用仓库里的 tools/make-account.html。 -->
+  <main class="login" id="login" hidden>
+    <form id="login-form" autocomplete="on">
+      <img src="../images/logo.png" alt="AI_MultiLab">
+      <h1>网站管理</h1>
+      <label>账号<input id="user" name="username" autocomplete="username" required autocapitalize="none" spellcheck="false"></label>
+      <label>密码<input id="pass" name="password" type="password" autocomplete="current-password" required></label>
+      <button type="submit" id="submit">登录</button>
+      <p class="msg" id="msg" role="alert"></p>
+      <p class="hint">账号由网站维护人员开通。<a href="../">返回网站首页</a></p>
+    </form>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+      var USER_KEY = 'sveltia-cms.user';
+
+      function signedIn() {
+        try {
+          var u = JSON.parse(localStorage.getItem(USER_KEY) || 'null');
+          return !!(u && u.token);
+        } catch (e) { return false; }
+      }
+
+      // 加载管理后台（Sveltia CMS 0.248.0，MIT 许可，见 sveltia-cms.LICENSE.txt）
+      function loadCMS() {
+        var s = document.createElement('script');
+        s.src = 'sveltia-cms.js';
+        document.body.appendChild(s);
+      }
+
+      if (signedIn() || location.hash.indexOf('#/signin/') === 0) {
+        loadCMS();
+        return;
+      }
+
+      var box = document.getElementById('login');
+      var form = document.getElementById('login-form');
+      var msg = document.getElementById('msg');
+      var btn = document.getElementById('submit');
+      box.hidden = false;
+      document.getElementById('user').focus();
+
+      function fromB64(s) {
+        var bin = atob(s), out = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+        return out;
+      }
+      function toB64url(str) {
+        var bytes = new TextEncoder().encode(str), bin = '';
+        for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+        return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+
+      async function decryptToken(rec, password) {
+        var base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+        var key = await crypto.subtle.deriveKey(
+          { name: 'PBKDF2', salt: fromB64(rec.salt), iterations: rec.iterations, hash: 'SHA-256' },
+          base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+        var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(rec.iv) }, key, fromB64(rec.data));
+        return new TextDecoder().decode(plain);
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        msg.textContent = '';
+        btn.disabled = true;
+        btn.textContent = '正在验证…';
+        try {
+          var user = document.getElementById('user').value.trim().toLowerCase();
+          var pass = document.getElementById('pass').value;
+          var res = await fetch('accounts.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('accounts');
+          var rec = ((await res.json()).accounts || {})[user];
+          if (!rec) throw new Error('auth');
+          var token;
+          try { token = await decryptToken(rec, pass); } catch (err) { throw new Error('auth'); }
+          // 交给管理后台：Sveltia CMS 自带的“链接登录”入口 #/signin/<base64url({token})>
+          location.hash = '#/signin/' + toB64url(JSON.stringify({ token: token }));
+          box.hidden = true;
+          loadCMS();
+        } catch (err) {
+          msg.textContent = err.message === 'auth' ? '账号或密码错误' : '暂时无法登录，请稍后再试';
+          btn.disabled = false;
+          btn.textContent = '登录';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

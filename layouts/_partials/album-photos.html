@@ -1,0 +1,12 @@
+{{- /* 相册照片列表：photos 可以是文件名列表（管理后台上传的格式），也可以是 {image, caption} 列表；
+       都没填就用文件夹里的全部图片 */ -}}
+{{- $list := slice -}}
+{{- with .Params.photos -}}
+  {{- range . -}}
+    {{- if reflect.IsMap . }}{{ $list = $list | append (dict "src" .image "caption" (.caption | default "")) }}
+    {{- else }}{{ $list = $list | append (dict "src" . "caption" "") }}{{ end -}}
+  {{- end -}}
+{{- else -}}
+  {{- range (.Resources.ByType "image") }}{{ $list = $list | append (dict "src" .Name "caption" "") }}{{ end -}}
+{{- end -}}
+{{- return $list -}}

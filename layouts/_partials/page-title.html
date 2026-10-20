@@ -1,0 +1,4 @@
+{{- /* 页面大标题；中文页面在后面用小字附上英文标题（取自英文版页面） */ -}}
+<div class="sec-title">
+  <h1>{{ .Title }}{{ if eq site.Language.Lang "zh" }}{{ range first 1 .Translations }} <small>{{ .Title }}</small>{{ end }}{{ end }}</h1>
+</div>

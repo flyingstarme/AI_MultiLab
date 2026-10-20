@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "page-title.html" . }}
+  {{- $pager := .Paginate (.Pages.ByDate.Reverse) 15 }}
+  <ul class="news-index">
+    {{- range $pager.Pages }}
+    <li>
+      {{- $im := partial "image.html" (dict "page" . "src" .Params.cover "op" "fill" "spec" "400x300 Center") }}
+      {{- with $im.src }}<a href="{{ $.RelPermalink }}" tabindex="-1" aria-hidden="true"><img class="thumb" src="{{ . }}" alt="" width="200" height="150" loading="lazy"></a>{{ end }}
+      <div>
+        <span class="news-date">{{ .Date.Format "2006-01-02" }}</span>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{- with .Params.summary }}<p>{{ . | plainify | truncate 160 }}</p>{{ end }}
+      </div>
+    </li>
+    {{- end }}
+  </ul>
+  {{- if gt $pager.TotalPages 1 }}
+  <nav class="pager" aria-label="{{ T "pagination" }}">
+    {{- with $pager.Prev }}<a href="{{ .URL }}">&lsaquo; {{ T "newer" }}</a>{{ else }}<span></span>{{ end }}
+    {{- with $pager.Next }}<a href="{{ .URL }}">{{ T "older" }} &rsaquo;</a>{{ end }}
+  </nav>
+  {{- end }}
+</div>
+{{ end }}

@@ -1,0 +1,61 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "section-head.html" . }}
+
+  {{- with site.GetPage "/pi" }}
+  <section class="member-group">
+    {{ partial "sec-title.html" (dict "title" (T "pi_section") "en" "Principal Investigator") }}
+    <a class="pi-card pi-card-link" href="{{ .RelPermalink }}">
+      {{- $ph := partial "image.html" (dict "page" . "src" .Params.photo "op" "fill" "spec" "240x320 Top") }}
+      {{- with $ph.src }}<img class="pi-photo" src="{{ . }}" alt="{{ $.Params.name }}" width="120" height="160">{{ end }}
+      <span class="pi-info">
+        <h3>{{ .Params.name }}</h3>
+        <span class="pi-title">{{ .Params.position }} · {{ .Params.affiliation }}</span>
+        <span class="more-inline">{{ T "view_details" }} &rsaquo;</span>
+      </span>
+    </a>
+  </section>
+  {{- end }}
+
+  {{- $current := where .RegularPages "Params.status" "current" }}
+  {{- $roles := slice "博士后" "博士研究生" "硕士研究生" "本科生" "访问学者" }}
+  {{- range $roles }}
+  {{- $role := . }}
+  {{- $ms := where $current "Params.role" $role }}
+  {{- if $ms }}
+  {{- $label := partial "label.html" $role }}
+  {{- $withPhoto := where $ms "Params.photo" "!=" nil }}
+  {{- $noPhoto := where $ms "Params.photo" "==" nil }}
+  <section class="member-group">
+    {{ partial "sec-title.html" (dict "title" $label) }}
+    {{- if $withPhoto }}
+    <div class="member-grid">
+      {{- range sort $withPhoto "Params.order" }}
+      <div class="member">
+        {{- $ph := partial "image.html" (dict "page" . "src" .Params.photo "op" "fill" "spec" "300x400 Top") }}
+        <img class="member-photo" src="{{ $ph.src }}" alt="{{ .Title }}" width="300" height="400" loading="lazy">
+        <div class="name">{{ .Title }}</div>
+        <div class="meta">{{ with .Params.grade }}{{ T "grade" (dict "Year" .) }}{{ end }}</div>
+        {{- with .Params.research }}<div class="meta">{{ T "research_label" }}{{ . }}</div>{{ end }}
+      </div>
+      {{- end }}
+    </div>
+    {{- end }}
+    {{- /* 没有照片的成员（如本科生）按年级列名字 */}}
+    {{- with $noPhoto }}
+    {{- $grades := slice }}
+    {{- range . }}{{ $grades = $grades | append (int (.Params.grade | default 0)) }}{{ end }}
+    <ul class="name-list">
+      {{- range sort (uniq $grades) "value" "desc" }}
+      {{- $g := . }}
+      {{- $names := slice }}
+      {{- range sort (where $noPhoto "Params.grade" "eq" $g) "Params.order" }}{{ $names = $names | append .Title }}{{ end }}
+      <li>{{ if $g }}<span class="name-list-grade">{{ T "grade" (dict "Year" $g) }}</span>{{ end }}{{ delimit $names (cond (eq site.Language.Lang "zh") "、" ", ") }}</li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </section>
+  {{- end }}
+  {{- end }}
+</div>
+{{ end }}

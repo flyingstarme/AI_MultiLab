@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ cond (eq site.Language.Lang "zh") "zh-CN" "en" }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Params.summary }}{{ . | plainify | truncate 120 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
+  <link rel="icon" type="image/png" href="{{ "favicon.png" | relURL }}">
+  <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+  {{- range .Translations }}
+  <link rel="alternate" hreflang="{{ cond (eq .Language.Lang "zh") "zh-CN" "en" }}" href="{{ .Permalink }}">
+  {{- end }}
+  {{- $css := resources.Get "css/main.css" | minify | fingerprint }}
+  {{- /* 本地预览包（双击打开）里不加 integrity，否则浏览器会拦截 file:// 下的样式和脚本 */}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ if not site.Params.noSRI }} integrity="{{ $css.Data.Integrity }}"{{ end }}>
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ T "skip" }}</a>
+  {{ partial "header.html" . }}
+  <main id="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  {{- $js := resources.Get "js/main.js" | minify | fingerprint }}
+  <script src="{{ $js.RelPermalink }}"{{ if not site.Params.noSRI }} integrity="{{ $js.Data.Integrity }}"{{ end }} defer></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "page-title.html" . }}
+  <div class="pi-profile">
+    {{- $ph := partial "image.html" (dict "page" . "src" .Params.photo "op" "fill" "spec" "360x480 Top") }}
+    {{- with $ph.src }}<img class="pi-photo" src="{{ . }}" alt="{{ $.Params.name }}" width="180" height="240">{{ end }}
+    <div>
+      <h2>{{ .Params.name }}</h2>
+      <p class="pi-title">{{ .Params.position }} · {{ .Params.affiliation }}</p>
+      <dl>
+        <dt>{{ T "email" }}</dt><dd>{{ with .Params.email }}<a href="mailto:{{ . }}">{{ . }}</a>{{ end }}</dd>
+        {{- with .Params.phone }}<dt>{{ T "phone" }}</dt><dd>{{ . }}</dd>{{ end }}
+        <dt>{{ T "address" }}</dt><dd>{{ with partial "site-text.html" "address" }}{{ . }}{{ else }}{{ partial "todo.html" (T "todo_office") }}{{ end }}</dd>
+        {{- with .Params.scholar }}<dt>{{ T "profile" }}</dt><dd><a href="{{ . }}" target="_blank" rel="noopener">Google Scholar</a></dd>{{ end }}
+      </dl>
+    </div>
+  </div>
+  <div class="prose">
+    {{ .Content }}
+  </div>
+</div>
+{{ end }}

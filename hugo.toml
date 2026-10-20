@@ -1,0 +1,170 @@
+# AI_MultiLab 课题组网站配置
+# 本地预览：hugo server    正式构建：hugo --minify（GitHub Actions 会自动执行）
+baseURL = "/"
+defaultContentLanguage = "zh"
+defaultContentLanguageInSubdir = false
+hasCJKLanguage = true
+timeZone = "Asia/Shanghai"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term", "rss"]
+
+[params]
+  # 页面上用黄色虚线框标出“待补充”的内容。正式上线、内容补齐后改成 false。
+  showTodo = true
+
+# 页面文件夹里的原图默认不发布，只发布模板实际用到的缩小版（WebP）
+[[cascade]]
+  [cascade.build]
+    publishResources = false
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+[imaging]
+  resampleFilter = "Lanczos"
+  [imaging.jpeg]
+    quality = 82
+  [imaging.webp]
+    quality = 80
+
+# ---------------------------------------------------------------- 语言
+# 中文在网站根目录（/），英文在 /en/。英文页面是同一文件夹里的 *.en.md 文件。
+[languages]
+  [languages.zh]
+    weight = 1
+    label = "中文"
+    locale = "zh-CN"
+    title = "智能赋能多物理场分析与检测实验室"
+    [languages.zh.params]
+      description = "AI_MultiLab 课题组（东南大学）：多物理场测试系统开发与应用、热工装备设计与优化、智能分析与轻量化部署。"
+  [languages.en]
+    weight = 2
+    label = "English"
+    locale = "en"
+    title = "AI_MultiLab"
+    [languages.en.params]
+      description = "AI_MultiLab (Southeast University): multiphysics measurement systems, thermal equipment design and optimization, intelligent analysis and lightweight deployment."
+
+# ---------------------------------------------------------------- 导航菜单
+# 有 parent 的是下拉子菜单项；params.en 是中文页面大标题后面的英文小字
+[[languages.zh.menus.main]]
+  name = "首页"
+  pageRef = "/"
+  weight = 1
+[[languages.zh.menus.main]]
+  name = "负责人"
+  pageRef = "/pi"
+  weight = 2
+[[languages.zh.menus.main]]
+  identifier = "members"
+  name = "团队成员"
+  pageRef = "/members"
+  weight = 3
+  [languages.zh.menus.main.params]
+    en = "Group Members"
+[[languages.zh.menus.main]]
+  name = "在读成员"
+  pageRef = "/members"
+  parent = "members"
+  weight = 1
+[[languages.zh.menus.main]]
+  name = "毕业生"
+  pageRef = "/members/alumni"
+  parent = "members"
+  weight = 2
+[[languages.zh.menus.main]]
+  name = "研究方向"
+  pageRef = "/research"
+  weight = 4
+[[languages.zh.menus.main]]
+  identifier = "outputs"
+  name = "研究成果"
+  pageRef = "/publications"
+  weight = 5
+  [languages.zh.menus.main.params]
+    en = "Publications"
+[[languages.zh.menus.main]]
+  name = "论文"
+  pageRef = "/publications"
+  parent = "outputs"
+  weight = 1
+[[languages.zh.menus.main]]
+  name = "代表性科研项目"
+  pageRef = "/projects"
+  parent = "outputs"
+  weight = 2
+[[languages.zh.menus.main]]
+  name = "实验平台"
+  pageRef = "/facilities"
+  weight = 6
+[[languages.zh.menus.main]]
+  name = "新闻动态"
+  pageRef = "/news"
+  weight = 7
+[[languages.zh.menus.main]]
+  name = "相册"
+  pageRef = "/album"
+  weight = 8
+[[languages.zh.menus.main]]
+  name = "加入我们"
+  pageRef = "/join"
+  weight = 9
+
+[[languages.en.menus.main]]
+  name = "Homepage"
+  pageRef = "/"
+  weight = 1
+[[languages.en.menus.main]]
+  name = "PI Information"
+  pageRef = "/pi"
+  weight = 2
+[[languages.en.menus.main]]
+  identifier = "members"
+  name = "Group Members"
+  pageRef = "/members"
+  weight = 3
+[[languages.en.menus.main]]
+  name = "Current Members"
+  pageRef = "/members"
+  parent = "members"
+  weight = 1
+[[languages.en.menus.main]]
+  name = "Alumni"
+  pageRef = "/members/alumni"
+  parent = "members"
+  weight = 2
+[[languages.en.menus.main]]
+  name = "Research"
+  pageRef = "/research"
+  weight = 4
+[[languages.en.menus.main]]
+  identifier = "outputs"
+  name = "Publications"
+  pageRef = "/publications"
+  weight = 5
+[[languages.en.menus.main]]
+  name = "Papers"
+  pageRef = "/publications"
+  parent = "outputs"
+  weight = 1
+[[languages.en.menus.main]]
+  name = "Selected Projects"
+  pageRef = "/projects"
+  parent = "outputs"
+  weight = 2
+[[languages.en.menus.main]]
+  name = "Facilities"
+  pageRef = "/facilities"
+  weight = 6
+[[languages.en.menus.main]]
+  name = "News"
+  pageRef = "/news"
+  weight = 7
+[[languages.en.menus.main]]
+  name = "Photo Album"
+  pageRef = "/album"
+  weight = 8
+[[languages.en.menus.main]]
+  name = "Join Us"
+  pageRef = "/join"
+  weight = 9

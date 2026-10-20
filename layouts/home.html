@@ -1,0 +1,70 @@
+{{ define "main" }}
+<div class="container">
+  {{- with .Params.carousel }}
+  <section class="carousel" aria-roledescription="carousel" aria-label="{{ T "carousel_label" }}" data-interval="4500">
+    <ul class="carousel-track">
+      {{- range $i, $s := . }}
+      {{- $im := partial "image.html" (dict "page" $ "src" $s.image "op" "fill" "spec" "1650x600 Center") }}
+      <li class="carousel-slide" aria-roledescription="slide" aria-label="{{ add $i 1 }} / {{ len $.Params.carousel }}">
+        {{- with $s.link }}<a href="{{ strings.TrimPrefix "/" . | relLangURL }}">{{ end }}
+        <img src="{{ $im.src }}" alt="{{ $s.caption }}"{{ with $im.w }} width="{{ . }}" height="{{ $im.h }}"{{ end }}{{ if gt $i 0 }} loading="lazy"{{ end }}>
+        {{- with $s.caption }}<p class="carousel-caption">{{ . }}</p>{{ end }}
+        {{- with $s.link }}</a>{{ end }}
+      </li>
+      {{- end }}
+    </ul>
+    <button class="carousel-btn carousel-prev" type="button" aria-label="{{ T "prev" }}">&#8249;</button>
+    <button class="carousel-btn carousel-next" type="button" aria-label="{{ T "next" }}">&#8250;</button>
+    <div class="carousel-dots"></div>
+  </section>
+  {{- end }}
+
+  <div class="home-grid">
+    <div class="home-col">
+      <section>
+        {{ partial "sec-title.html" (dict "title" (T "about") "en" "About") }}
+        <p class="intro-text">{{ partial "site-text.html" "intro" }}</p>
+      </section>
+      {{- with site.GetPage "/pi" }}
+      <section>
+        {{ partial "sec-title.html" (dict "title" (T "pi_home") "en" "PI" "more" .RelPermalink "moreText" (T "details")) }}
+        <div class="pi-card">
+          {{- $ph := partial "image.html" (dict "page" . "src" .Params.photo "op" "fill" "spec" "240x320 Top") }}
+          {{- with $ph.src }}<img class="pi-photo" src="{{ . }}" alt="{{ $.Params.name }}" width="120" height="160">{{ end }}
+          <div class="pi-info">
+            <h3><a href="{{ .RelPermalink }}">{{ .Params.name }}</a></h3>
+            <p class="pi-title">{{ .Params.position }} · {{ .Params.affiliation }}</p>
+            <p>{{ .Params.summary }}</p>
+            {{- with .Params.email }}<p>{{ T "email" }}{{ T "colon" }}<a href="mailto:{{ . }}">{{ . }}</a></p>{{ end }}
+          </div>
+        </div>
+      </section>
+      {{- end }}
+    </div>
+    <div class="home-col">
+      <section>
+        {{ partial "sec-title.html" (dict "title" (T "news") "en" "News" "accent" true "more" ("news/" | relLangURL)) }}
+        {{- $news := (where site.RegularPages "Section" "news").ByDate.Reverse }}
+        <div class="news-box">
+          <ul class="news-list">
+            {{- range first (.Params.news_count | default 8) $news }}
+            <li class="news-item"><span class="news-date">{{ .Date.Format "2006-01-02" }}</span><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+            {{- else }}
+            <li class="news-item">{{ T "no_news" }}</li>
+            {{- end }}
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  {{- with site.GetPage "/research" }}
+  <section class="home-research">
+    {{ partial "sec-title.html" (dict "title" (T "research") "en" "Research" "more" .RelPermalink) }}
+    <div class="card-grid">
+      {{- range .Pages.ByWeight }}{{ partial "research-card.html" . }}{{ end }}
+    </div>
+  </section>
+  {{- end }}
+</div>
+{{ end }}

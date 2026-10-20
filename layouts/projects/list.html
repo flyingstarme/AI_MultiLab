@@ -1,0 +1,15 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "section-head.html" . }}
+  {{ partial "direction-filter.html" . }}
+  <div id="pub-body">
+    <div class="pub-block">
+      <ol class="pub-list">
+        {{- range sort .RegularPages "Params.order" }}
+        <li data-direction="{{ .Params.direction }}"><span class="pub-tag">{{ partial "label.html" .Params.category }}</span> {{ .Title }}{{ with .Params.period }}{{ T "comma" }}{{ . }}{{ end }}</li>
+        {{- end }}
+      </ol>
+    </div>
+  </div>
+</div>
+{{ end }}
