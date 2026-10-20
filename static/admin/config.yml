@@ -208,19 +208,20 @@ collections:
     i18n: true
     files:
       - name: site
-        label: 站点设置（简介、邮箱、地址）
+        label: 站点设置（名称、简介、邮箱、地址）
         file: /data/site.yaml
         i18n: false
         fields:
-          - { name: name, label: 课题组名称 }
-          - { name: affiliation, label: 单位 }
+          - { name: name, label: 课题组简称, hint: 显示在页脚和浏览器标题，例如 AI_MultiLab }
+          - { name: full_name, label: 实验室全称, hint: 显示在页头右上角 }
+          - { name: full_name_en, label: 实验室全称（英文）, required: false }
+          - { name: affiliation, label: 单位, hint: 显示在页头全称下方和页脚 }
           - { name: affiliation_en, label: 单位（英文）, required: false }
-          - { name: motto, label: 页头标语 }
-          - { name: motto_en, label: 页头标语（英文）, required: false }
           - { name: intro, label: 首页“课题组简介”, widget: text }
           - { name: intro_en, label: 首页“课题组简介”（英文）, widget: text, required: false }
           - { name: email, label: 联系邮箱 }
-          - { name: address, label: 通讯地址, required: false }
+          - { name: wechat, label: 微信号, required: false }
+          - { name: address, label: 通讯地址, hint: 显示在页脚和负责人页, required: false }
           - { name: address_en, label: 通讯地址（英文）, required: false }
       - name: home
         label: 首页轮播图
