@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intelligent Analysis and Lightweight Deployment | AI_MultiLab</title>
+  <meta name="description" content="Technical framework and research platform for intelligent analysis and lightweight deployment; magnetic flux leakage …">
+  <link rel="icon" type="image/png" href="../../../favicon.png">
+  <link rel="apple-touch-icon" href="../../../apple-touch-icon.png">
+  <link rel="alternate" hreflang="zh-CN" href="../../../research/intelligent-analysis/index.html">
+  <link rel="stylesheet" href="../../../css/main.min.c21261d52f6656316df72ac6867080a7825f742554e0d92b8a1b39ee7aef3f13.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="../../../en/index.html" aria-label="AI_MultiLab Home"><img src="../../../images/logo.png" width="654" height="126" alt="AI_MultiLab"></a>
+    <div class="header-right"><a class="lang-switch" href="../../../research/intelligent-analysis/index.html" lang="zh-CN">中文</a>
+      <p class="header-motto">AI-Empowered Multiphysics Analysis and Testing Laboratory<small>School of Mechanical Engineering, Southeast University</small></p>
+    </div>
+  </div>
+</header>
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="container">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="nav-toggle-icon" aria-hidden="true"></span>Menu</button>
+    <ul id="nav-menu">
+      <li><a href="../../../en/index.html">Homepage</a>
+      </li>
+      <li><a href="../../../en/pi/index.html">PI Information</a>
+      </li>
+      <li class="has-sub"><a href="../../../en/members/index.html">Group Members</a>
+        <ul class="sub-menu">
+          <li><a href="../../../en/members/index.html">Current Members</a></li>
+          <li><a href="../../../en/members/alumni/index.html">Alumni</a></li>
+        </ul>
+      </li>
+      <li><a href="../../../en/research/index.html" aria-current="page">Research</a>
+      </li>
+      <li class="has-sub"><a href="../../../en/publications/index.html">Publications</a>
+        <ul class="sub-menu">
+          <li><a href="../../../en/publications/index.html">Papers</a></li>
+          <li><a href="../../../en/projects/index.html">Selected Projects</a></li>
+        </ul>
+      </li>
+      <li><a href="../../../en/facilities/index.html">Facilities</a>
+      </li>
+      <li><a href="../../../en/news/index.html">News</a>
+      </li>
+      <li><a href="../../../en/album/index.html">Photo Album</a>
+      </li>
+      <li><a href="../../../en/join/index.html">Join Us</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+  <main id="main">
+    
+<div class="container page">
+  <p class="breadcrumb"><a href="../../../en/research/index.html">Research</a> &rsaquo; Intelligent Analysis and Lightweight Deployment</p>
+  <div class="sec-title"><h1>Intelligent Analysis and Lightweight Deployment</h1></div>
+  <div class="prose">
+    <h2 id="1-technical-framework-and-research-platform-for-intelligent-analysis-and-lightweight-deployment">1. Technical Framework and Research Platform for Intelligent Analysis and Lightweight Deployment</h2>
+<p>Long-distance oil and gas pipelines and gas field production sites are rapidly entering the digital era. Processes such as in-line pipeline inspection and wellhead pressure and production monitoring continuously generate high-frequency, high-dimensional field data, and the annual volume of minute-level pressure records for a single well has reached the order of hundreds of thousands of entries. The scale and complexity of these data make manual interpretation and experience-based analysis inadequate, while limited on-site computing power and unstable power supply and network conditions require analytical models to be as lightweight as possible and capable of real-time response. &ldquo;Intelligent analysis&rdquo; and &ldquo;lightweight deployment&rdquo; therefore constitute two complementary sides of a single technical mainline: the former addresses the problem that &ldquo;there is too much data to review and it cannot be labeled accurately&rdquo;, while the latter addresses the problem that &ldquo;the models cannot run efficiently and cannot be deployed in the field&rdquo;.</p>
+<p>This research direction adopts a cascaded strategy that decouples detection from classification, splitting defect localization and type recognition into two stages, each handled by the most suitable pretrained model. In the first stage of the cascaded framework, a pretrained YOLOv5 object detection model performs rapid defect localization and candidate region extraction; in the second stage, the candidate regions are fed into a pretrained Vision Transformer (ViT) for defect type recognition. This decoupled design accommodates the practical constraints of small samples and offline training: the pretrained backbones have already learned rich texture representations from general images and can maintain stable performance even when defect-specific data are limited. Building on qualitative recognition, quantitative prediction of defect axial length and depth was further investigated. The axial, radial and circumferential magnetic flux leakage (MFL) signals are first fused channel-wise into a three-channel image and denoised, after which YOLOv8x is used for defect localization. Samples are then cropped for each defect using the largest anchor box, and the numerical features of the defect matrix are converted into image form. Together with the three-channel composite image, these six data forms in total are fed into a multi-input parallel convolutional network for training, so that the network extracts complementary features from different representational perspectives.</p>
+<p><a class="pic" href="../../../research/intelligent-analysis/fig01_hu_f94e76c3ecc26b2.webp" data-lightbox="content" data-caption="1. Technical framework and research platform for intelligent analysis and lightweight deployment"><img src="../../../research/intelligent-analysis/fig01_hu_7932378b4ef5e69.webp" alt="1. Technical framework and research platform for intelligent analysis and lightweight deployment" width="1000" height="422" loading="lazy" decoding="async"></a></p>
+<p><a class="pic" href="../../../research/intelligent-analysis/fig02_hu_fc380efffe0ae83c.webp" data-lightbox="content" data-caption="YOLOv8 defect detection network architecture, and comparison between YOLOv8 detection boxes and standard-size boxes (1/2)"><img src="../../../research/intelligent-analysis/fig02_hu_23f2b8b281f574a2.webp" alt="YOLOv8 defect detection network architecture, and comparison between YOLOv8 detection boxes and standard-size boxes (1/2)" width="939" height="800" loading="lazy" decoding="async"></a>
+<a class="pic" href="../../../research/intelligent-analysis/fig03_hu_df13fa7d0ead5b80.webp" data-lightbox="content" data-caption="YOLOv8 defect detection network architecture, and comparison between YOLOv8 detection boxes and standard-size boxes (2/2)"><img src="../../../research/intelligent-analysis/fig03_hu_d08b0d13a391fbd8.webp" alt="YOLOv8 defect detection network architecture, and comparison between YOLOv8 detection boxes and standard-size boxes (2/2)" width="984" height="787" loading="lazy" decoding="async"></a></p>
+<p><em>Figure: YOLOv8 defect detection network architecture, and comparison between YOLOv8 detection boxes and standard-size boxes</em></p>
+<h2 id="2-magnetic-flux-leakage-signal-reconstruction-and-generative-sample-augmentation">2. Magnetic Flux Leakage Signal Reconstruction and Generative Sample Augmentation</h2>
+<p>MFL signals are acquired in harsh environments, at high speed and over long acquisition periods, so the actual data commonly suffer from undersampling and missing channels. At the same time, real defect samples are scarce and their class distribution is highly imbalanced. These two problems correspond to the two technical routes of this research direction: signal reconstruction constrained by physical priors, and sample augmentation driven by generative models.</p>
+<p>To address the scarcity of real defect samples and class imbalance, a class-encoded diffusion model is employed to generate MFL defect signals. The generation process is built on the denoising diffusion probabilistic model (DDPM) framework: the forward process gradually adds noise to the samples until they approximate Gaussian noise, the reverse process progressively denoises and recovers the samples using a U-Net with class embeddings, and the training objective is the mean squared error of the predicted noise. The key design is to encode the defect class into the network as control information. The simulated defects are divided into six types (cracks, pinholes, pitting, grooving, slotting and general metal loss), each with two groups of data, axial and radial, giving 12 groups in total (labeled A–L) that are input to the model as class labels. As a result, defect samples of a specified type can be generated in a targeted manner during sampling by changing the class parameter.</p>
+<p><a class="pic" href="../../../research/intelligent-analysis/fig04_hu_d9e8f252afe2c5a0.webp" data-lightbox="content" data-caption="Training process of the class-encoded diffusion model (class image → noise addition → U-Net noise prediction) and the reverse denoising sampling process (1/2)"><img src="../../../research/intelligent-analysis/fig04_hu_b1eb0ce761486d5d.webp" alt="Training process of the class-encoded diffusion model (class image → noise addition → U-Net noise prediction) and the reverse denoising sampling process (1/2)" width="822" height="386" loading="lazy" decoding="async"></a>
+<a class="pic" href="../../../research/intelligent-analysis/fig05_hu_d0a149441a0ce43f.webp" data-lightbox="content" data-caption="Training process of the class-encoded diffusion model (class image → noise addition → U-Net noise prediction) and the reverse denoising sampling process (2/2)"><img src="../../../research/intelligent-analysis/fig05_hu_3e5c332ad6114f3b.webp" alt="Training process of the class-encoded diffusion model (class image → noise addition → U-Net noise prediction) and the reverse denoising sampling process (2/2)" width="1000" height="401" loading="lazy" decoding="async"></a></p>
+<p><em>Figure: Training process of the class-encoded diffusion model (class image → noise addition → U-Net noise prediction) and the reverse denoising sampling process</em></p>
+<h2 id="3-intelligent-prediction-and-operating-condition-diagnosis-for-oil-and-gas-production-data">3. Intelligent Prediction and Operating Condition Diagnosis for Oil and Gas Production Data</h2>
+<p>Plunger lift is an effective artificial lift method for removing liquid loading at the bottom of gas wells. A complete production cycle can be divided into stages such as liquid accumulation, lifting and unloading, and the casing pressure and tubing pressure follow different patterns in each stage. With the widespread adoption of digital plunger control systems and large-capacity databases, the massive pressure data accumulated in the field provide a foundation for machine learning, but the lack of cost-effective labeling methods has remained a limiting factor. This research direction proposes an unsupervised clustering-based diagnostic workflow that automatically segments cycles from continuous data and assigns operating condition labels.</p>
+<p>The workflow consists of two steps. The first step is cycle point identification. In the absence of cycle point annotations, an unsupervised cycle identification algorithm based on local extremum search intervals is first developed to provide initial labels, which are then used to train a cycle identification network based on a Transformer encoder, enabling automatic localization of cycle points. The cycle points are used to segment the continuous data into periodic sub-datasets, which are assigned four labels: early liquid loading, liquid loading removal, late liquid loading and abnormal operation. The second step is dimensionality reduction and clustering. The effects of four dimensionality reduction approaches, namely statistical features, multidimensional scaling (MDS), principal component analysis (PCA) and autoencoders, on clustering quality are compared, and a CNN-LSTM autoencoder with a clustering layer is adopted to jointly optimize the reconstruction loss and the clustering loss.</p>
+<p><a class="pic" href="../../../research/intelligent-analysis/fig06_hu_3a3d139e47270228.webp" data-lightbox="content" data-caption="Architecture of the CNN-LSTM autoencoder with a clustering layer, and comparison of AUC convergence curves for different dimensionality reduction methods (1/2)"><img src="../../../research/intelligent-analysis/fig06_hu_f487c73def538a8e.webp" alt="Architecture of the CNN-LSTM autoencoder with a clustering layer, and comparison of AUC convergence curves for different dimensionality reduction methods (1/2)" width="763" height="800" loading="lazy" decoding="async"></a>
+<a class="pic" href="../../../research/intelligent-analysis/fig07_hu_b6b76dbef24eefea.webp" data-lightbox="content" data-caption="Architecture of the CNN-LSTM autoencoder with a clustering layer, and comparison of AUC convergence curves for different dimensionality reduction methods (2/2)"><img src="../../../research/intelligent-analysis/fig07_hu_7a3aabf03608ba25.webp" alt="Architecture of the CNN-LSTM autoencoder with a clustering layer, and comparison of AUC convergence curves for different dimensionality reduction methods (2/2)" width="516" height="396" loading="lazy" decoding="async"></a></p>
+<p><em>Figure: Architecture of the CNN-LSTM autoencoder with a clustering layer, and comparison of AUC convergence curves for different dimensionality reduction methods</em></p>
+<h2 id="4-lightweight-models-and-real-time-edge-deployment">4. Lightweight Models and Real-Time Edge Deployment</h2>
+<p>Limited on-site computing power and power budgets constitute the last mile in bringing intelligent analysis algorithms into practice. Focusing on three pathways, namely structural compression, knowledge distillation and operator optimization, this research direction compresses the aforementioned models so that they can run in real time on edge devices, and verifies the performance cost of compression through specific engineering tasks.</p>
+<p>Phase-sensitive optical time-domain reflectometry (Φ-OTDR) is a distributed vibration sensing technology with extremely high sensitivity for pipeline safety monitoring. However, its sensitivity to the environment also causes routine activities to be misjudged as threats, leading to frequent false alarms. To make alarms actionable, continuous vibration signals must be converted into quantifiable risk levels. This research direction establishes a mapping from the distance between an excavator and the pipeline to threat levels: within 5 m is classified as &ldquo;direct intrusion&rdquo;, within 10 m as &ldquo;high-risk operation&rdquo;, and beyond 15 m as &ldquo;background construction&rdquo;. On the model side, through structural optimization and parameter compression of the standard Vision Transformer, a lightweight model, LP-ViT, is proposed. It replaces standard multi-head attention with local-global hybrid attention (L-MHA), introduces relative position encoding (RPP) and a purpose-designed dual-path compression module (DPCM), and adopts multi-dimensional feature fusion and modality conversion mechanisms to suppress noise and reconstruct transient vibration features.</p>
+<p><a class="pic" href="../../../research/intelligent-analysis/fig08_hu_8b7fccd50d52bdc2.webp" data-lightbox="content" data-caption="LP-ViT lightweight network architecture (including the dual-path compression module DPCM and lightweight multi-head attention L-MHA), and comparison of confusion matrices of the models before and after compression in different scenarios (1/3)"><img src="../../../research/intelligent-analysis/fig08_hu_28a927142c702e5a.webp" alt="LP-ViT lightweight network architecture (including the dual-path compression module DPCM and lightweight multi-head attention L-MHA), and comparison of confusion matrices of the models before and after compression in different scenarios (1/3)" width="1000" height="370" loading="lazy" decoding="async"></a>
+<a class="pic" href="../../../research/intelligent-analysis/fig09_hu_a806946cd0ea9577.webp" data-lightbox="content" data-caption="LP-ViT lightweight network architecture (including the dual-path compression module DPCM and lightweight multi-head attention L-MHA), and comparison of confusion matrices of the models before and after compression in different scenarios (2/3)"><img src="../../../research/intelligent-analysis/fig09_hu_cd2a6877d7eb8c33.webp" alt="LP-ViT lightweight network architecture (including the dual-path compression module DPCM and lightweight multi-head attention L-MHA), and comparison of confusion matrices of the models before and after compression in different scenarios (2/3)" width="1000" height="700" loading="lazy" decoding="async"></a>
+<a class="pic" href="../../../research/intelligent-analysis/fig10_hu_a490abf555030769.webp" data-lightbox="content" data-caption="LP-ViT lightweight network architecture (including the dual-path compression module DPCM and lightweight multi-head attention L-MHA), and comparison of confusion matrices of the models before and after compression in different scenarios (3/3)"><img src="../../../research/intelligent-analysis/fig10_hu_8a6a17adb1f83f7c.webp" alt="LP-ViT lightweight network architecture (including the dual-path compression module DPCM and lightweight multi-head attention L-MHA), and comparison of confusion matrices of the models before and after compression in different scenarios (3/3)" width="1000" height="599" loading="lazy" decoding="async"></a></p>
+<p><em>Figure: LP-ViT lightweight network architecture (including the dual-path compression module DPCM and lightweight multi-head attention L-MHA), and comparison of confusion matrices of the models before and after compression in different scenarios</em></p>
+<h2 id="5-interactive-data-visualization-and-intelligent-operation-and-maintenance-platform">5. Interactive Data Visualization and Intelligent Operation and Maintenance Platform</h2>
+<p>The results of intelligent analysis are valuable only when they are actually put to use by field personnel. Data platforms at industrial sites commonly suffer from poorly arranged functional modules, unclear information hierarchies, inaccurate visual presentation and a lack of interactivity in charts. This research direction treats visualization and interaction design as an independent research subject, forming a closed loop of &ldquo;analysis algorithms, visualization platform and human-machine validation&rdquo;.</p>
+<p>The platform design follows a process of information framework, design specifications, interface implementation and usability validation. At the information framework level, functional modules are integrated, core functions are deepened and information retrieval paths are optimized. At the design specification level, color, typography and icon specifications are established. At the implementation level, the platform is developed with HTML5 and JavaScript and includes a monitoring module, a daily average indicator module, a 12-hour trend module and a historical data analysis and visualization module, supporting both view interaction and event interaction.</p>
+<p><a class="pic" href="../../../research/intelligent-analysis/fig11_hu_79b041222cef2c7c.webp" data-lightbox="content" data-caption="Oil and gas production data monitoring and pre-assessment interface (1/3)"><img src="../../../research/intelligent-analysis/fig11_hu_1d1da6c771bf987d.webp" alt="Oil and gas production data monitoring and pre-assessment interface (1/3)" width="597" height="800" loading="lazy" decoding="async"></a>
+<a class="pic" href="../../../research/intelligent-analysis/fig12_hu_57d319c06411c7d4.webp" data-lightbox="content" data-caption="Oil and gas production data monitoring and pre-assessment interface (2/3)"><img src="../../../research/intelligent-analysis/fig12_hu_f3ecd832465d0890.webp" alt="Oil and gas production data monitoring and pre-assessment interface (2/3)" width="684" height="507" loading="lazy" decoding="async"></a>
+<a class="pic" href="../../../research/intelligent-analysis/fig13_hu_ec681e11293d2076.webp" data-lightbox="content" data-caption="Oil and gas production data monitoring and pre-assessment interface (3/3)"><img src="../../../research/intelligent-analysis/fig13_hu_ec353718b1861acb.webp" alt="Oil and gas production data monitoring and pre-assessment interface (3/3)" width="1000" height="561" loading="lazy" decoding="async"></a></p>
+<p><em>Figure: Oil and gas production data monitoring and pre-assessment interface</em></p>
+
+  </div>
+  <nav class="pager" aria-label="Other research directions"><span></span><a href="../../../en/research/thermal-equipment/index.html">Design and Optimization of Thermal Equipment &rsaquo;</a>
+  </nav>
+</div>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-contact">
+      <p><strong>AI_MultiLab</strong> · School of Mechanical Engineering, Southeast University</p>
+      <p>Email: <a href="mailto:wangjianli@seu.edu.cn">wangjianli@seu.edu.cn</a></p>
+      <p>Address: Room 517, Mechanical Engineering Building, School of Mechanical Engineering, Southeast University (Jiulonghu Campus), Jiangning District, Nanjing, China</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 AI_MultiLab</p>
+      <p>Last updated: 2026-10-19</p>
+      <p><a class="footer-admin" href="../../../admin/index.html">Admin</a></p>
+    </div>
+  </div>
+</footer>
+
+  <script src="../../../js/main.min.ea9459e3b73f0065f3b4ae352c35ab716bd003bce736e1eff28b99d07e6bef94.js" defer></script>
+</body>
+</html>
