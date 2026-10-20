@@ -1,0 +1,24 @@
+{{ define "main" }}
+<div class="container page">
+  {{ partial "section-head.html" . }}
+  {{- /* 合作者：后台“团队成员”里状态选“合作者”的人 */}}
+  {{- $list := where (site.GetPage "/members").RegularPages "Params.status" "collaborator" }}
+  {{- if $list }}
+  <div class="member-grid">
+    {{- range sort $list "Params.order" }}
+    {{- $m := . }}
+    <div class="member">
+      {{- $ph := partial "image.html" (dict "page" $m "src" $m.Params.photo "op" "fill" "spec" "300x400 Top") }}
+      {{- with $ph.src }}<img class="member-photo" src="{{ . }}" alt="{{ $m.Title }}" width="300" height="400" loading="lazy">{{ else }}<span class="member-photo empty">{{ T "no_photo" }}</span>{{ end }}
+      <div class="name">{{ $m.Title }}</div>
+      {{- with $m.Params.affiliation }}<div class="meta">{{ . }}</div>{{ end }}
+      {{- with $m.Params.research }}<div class="meta">{{ T "research_label" }}{{ . }}</div>{{ end }}
+      {{- with $m.Params.homepage }}<div class="meta"><a href="{{ . }}" target="_blank" rel="noopener">{{ T "homepage_link" }} &rsaquo;</a></div>{{ end }}
+    </div>
+    {{- end }}
+  </div>
+  {{- else }}
+  {{ partial "todo.html" (T "todo_collab") }}
+  {{- end }}
+</div>
+{{ end }}

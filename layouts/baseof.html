@@ -22,6 +22,10 @@
   </main>
   {{ partial "footer.html" . }}
   {{- $js := resources.Get "js/main.js" | minify | fingerprint }}
+  {{- if site.Params.visitCounter }}
+  {{- /* 访客统计：不蒜子（busuanzi.ibruce.info），国内可访问、无需注册；不想要就把 hugo.toml 里的 visitCounter 改成 false */}}
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  {{- end }}
   <script src="{{ $js.RelPermalink }}"{{ if not site.Params.noSRI }} integrity="{{ $js.Data.Integrity }}"{{ end }} defer></script>
 </body>
 </html>

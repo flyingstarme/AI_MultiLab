@@ -9,6 +9,12 @@
     <div class="footer-meta">
       <p>© {{ now.Year }} {{ $name }}</p>
       <p>{{ T "last_updated" }}{{ T "colon" }}{{ now.Format "2006-01-02" }}</p>
+      {{- if site.Params.visitCounter }}
+      <p class="visit-stats">
+        <span id="busuanzi_container_site_pv" style="display:none">{{ T "visits_pv" }}<span id="busuanzi_value_site_pv"></span>{{ T "visits_pv_after" }}</span>
+        <span id="busuanzi_container_site_uv" style="display:none">{{ T "visits_uv" }}<span id="busuanzi_value_site_uv"></span>{{ T "visits_uv_after" }}</span>
+      </p>
+      {{- end }}
       <p><a class="footer-admin" href="{{ "admin/" | relURL }}">{{ T "admin" }}</a></p>
     </div>
   </div>

@@ -11,6 +11,8 @@ disableKinds = ["taxonomy", "term", "rss"]
 [params]
   # 页面上用黄色虚线框标出“待补充”的内容。正式上线、内容补齐后改成 false。
   showTodo = true
+  # 页脚显示访客统计（不蒜子）。不需要时改成 false。
+  visitCounter = true
 
 # 页面文件夹里的原图默认不发布，只发布模板实际用到的缩小版（WebP）
 [[cascade]]
@@ -73,6 +75,11 @@ disableKinds = ["taxonomy", "term", "rss"]
   parent = "members"
   weight = 2
 [[languages.zh.menus.main]]
+  name = "合作者"
+  pageRef = "/members/collaborators"
+  parent = "members"
+  weight = 3
+[[languages.zh.menus.main]]
   name = "研究方向"
   pageRef = "/research"
   weight = 4
@@ -133,6 +140,11 @@ disableKinds = ["taxonomy", "term", "rss"]
   pageRef = "/members/alumni"
   parent = "members"
   weight = 2
+[[languages.en.menus.main]]
+  name = "Collaborators"
+  pageRef = "/members/collaborators"
+  parent = "members"
+  weight = 3
 [[languages.en.menus.main]]
   name = "Research"
   pageRef = "/research"

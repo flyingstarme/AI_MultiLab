@@ -329,3 +329,6 @@ body.lb-lock { overflow: hidden; }
 html[lang="en"] .intro-text { text-indent: 0; text-align: left; }
 html[lang="en"] .prose p { text-align: left; }
 html[lang="en"] body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, var(--font); }
+
+/* 页脚访客统计 */
+.visit-stats { min-height: 1.5em; color: #9FB0C6; font-size: 13px; }

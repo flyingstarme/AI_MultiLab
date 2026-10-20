@@ -147,7 +147,7 @@ collections:
   - name: members
     label: 团队成员
     label_singular: 成员
-    description: 学生毕业后，把“状态”改成“已毕业”并填写去向即可。英文姓名用拼音。
+    description: 学生毕业后，把“状态”改成“已毕业”并填写去向即可；合作的老师状态选“合作者”。英文姓名用拼音。
     folder: /content/members
     path: '{{slug}}/index'
     slug: 'm{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}'
@@ -167,9 +167,12 @@ collections:
         options:
           - { label: 在读, value: current }
           - { label: 已毕业, value: alumni }
+          - { label: 合作者, value: collaborator }
       - { name: role, label: 身份（在读）, widget: select, required: false, options: [博士后, 博士研究生, 硕士研究生, 本科生, 访问学者], i18n: duplicate }
       - { name: grade, label: 入学年级, hint: 例如 2025, widget: number, value_type: int, required: false, i18n: duplicate }
       - { name: research, label: 研究方向, required: false, i18n: true }
+      - { name: affiliation, label: 单位与职称（合作者）, hint: 例如 某某大学 教授, required: false, i18n: true }
+      - { name: homepage, label: 个人主页链接（合作者）, required: false, i18n: duplicate }
       - { name: photo, label: 照片, widget: image, required: false, i18n: duplicate }
       - { name: grad_year, label: 毕业年份（已毕业）, widget: number, value_type: int, required: false, i18n: duplicate }
       - { name: degree, label: 学位（已毕业）, widget: select, required: false, options: [博士, 硕士, 学士], i18n: duplicate }
