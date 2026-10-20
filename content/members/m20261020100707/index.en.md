@@ -6,7 +6,7 @@ grade: null
 research: ''
 affiliation: China University of Petroleum (Beijing) Vice Dean of the College of Mechanical and Transportation Engineering
 homepage: ''
-photo: zhujianjun.webp
+photo: ''
 grad_year: null
 degree: ''
 destination: ''

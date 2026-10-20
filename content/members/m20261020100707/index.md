@@ -6,7 +6,7 @@ grade: null
 research: ''
 affiliation: 中国石油大学（北京） 副院长
 homepage: ''
-photo: zhujianjun.webp
+photo: ''
 grad_year: null
 degree: ''
 destination: ''
