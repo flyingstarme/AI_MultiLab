@@ -1,14 +1,14 @@
 ---
-title: "Design and Optimization of Thermal Equipment"
+title: Design and Optimization of Thermal Equipment
 weight: 2
-cover: "cover.jpg"
-summary: "Intelligent optimization design methods and platform for thermal equipment; multi-objective collaborative optimization design of liquid-cooling equipment; vapor-liquid two-phase transport mechanisms and performance regulation of flat micro heat pipes; design of downhole electric heating equipment for oil and gas resources; engineering application: multiphysics-coupled thermal management of underwater energy storage battery compartments."
+cover: cover.jpg
+summary: 'Intelligent optimization design methods and platform for thermal equipment; multi-objective collaborative optimization design of liquid-cooling equipment; vapor-liquid two-phase transport mechanisms and performance regulation of flat micro heat pipes; design of downhole electric heating equipment for oil and gas resources; engineering application: multiphysics-coupled thermal management of underwater energy storage battery compartments.'
 topics:
-  - "Intelligent Optimization Design Methods and Platform for Thermal Equipment"
-  - "Multi-Objective Collaborative Optimization Design of Liquid-Cooling Equipment"
-  - "Vapor-Liquid Two-Phase Transport Mechanisms and Performance Regulation of Flat Micro Heat Pipes"
-  - "Design of Downhole Electric Heating Equipment for Oil and Gas Resources"
-  - "Engineering Application: Multiphysics-Coupled Thermal Management of Underwater Energy Storage Battery Compartments"
+  - Intelligent Optimization Design Methods and Platform for Thermal Equipment
+  - Multi-Objective Collaborative Optimization Design of Liquid-Cooling Equipment
+  - Vapor-Liquid Two-Phase Transport Mechanisms and Performance Regulation of Flat Micro Heat Pipes
+  - Design of Downhole Electric Heating Equipment for Oil and Gas Resources
+  - 'Engineering Application: Multiphysics-Coupled Thermal Management of Underwater Energy Storage Battery Compartments'
 ---
 
 ## 1. Intelligent Optimization Design Methods and Platform for Thermal Equipment
