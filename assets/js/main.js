@@ -39,25 +39,28 @@
       for (var k = 0; k < n; k++) slides[k].inert = k !== index;
     }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    // 始终自动轮播（系统关闭了动画效果时，切换没有滑动动画，但仍会自动换图）
+    var hover = false;
     function start() {
       stop();
-      if (!reduceMotion) timer = setInterval(function () { go(index + 1); }, interval);
+      timer = setInterval(function () { go(index + 1); }, interval);
     }
+    // 手动切换后重新计时，鼠标不在图上就继续自动轮播
+    function nav(i) { go(i); if (!hover) start(); }
 
     for (var i = 0; i < n; i++) {
       var b = document.createElement('button');
       b.type = 'button';
       b.setAttribute('aria-label', TXT.slide + (i + 1) + (EN ? '' : ' 张'));
-      b.addEventListener('click', go.bind(null, i));
+      b.addEventListener('click', nav.bind(null, i));
       dotsBox.appendChild(b);
       dots.push(b);
     }
-    root.querySelector('.carousel-prev').addEventListener('click', function () { go(index - 1); });
-    root.querySelector('.carousel-next').addEventListener('click', function () { go(index + 1); });
-    root.addEventListener('mouseenter', stop);
-    root.addEventListener('mouseleave', start);
-    root.addEventListener('focusin', stop);
-    root.addEventListener('focusout', start);
+    root.querySelector('.carousel-prev').addEventListener('click', function () { nav(index - 1); });
+    root.querySelector('.carousel-next').addEventListener('click', function () { nav(index + 1); });
+    // 鼠标停在图上时暂停，移开后继续
+    root.addEventListener('mouseenter', function () { hover = true; stop(); });
+    root.addEventListener('mouseleave', function () { hover = false; start(); });
 
     var x0 = null;
     root.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
