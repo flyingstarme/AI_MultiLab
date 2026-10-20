@@ -12,5 +12,5 @@ degree: ''
 destination: ''
 thesis: ''
 honors: []
-order: 100
+order: 1
 ---
