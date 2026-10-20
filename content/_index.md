@@ -7,6 +7,9 @@ carousel:
   - image: /images/carousel/fig03_hu_7cf3736961f7ed81.webp
     caption: 实验平台
     link: /facilities/
+  - image: /images/carousel/纤维测量.webp
+    caption: 实验平台
+    link: /facilities/
   - image: images/carousel/banner-thermal.jpg
     caption: 热工装备设计与优化
     link: /research/thermal-equipment/

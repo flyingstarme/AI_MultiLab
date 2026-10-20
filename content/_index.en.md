@@ -7,6 +7,9 @@ carousel:
   - image: /images/carousel/fig03_hu_7cf3736961f7ed81.webp
     caption: ''
     link: /facilities/
+  - image: /images/carousel/纤维测量.webp
+    caption: ''
+    link: /facilities/
   - image: images/carousel/banner-thermal.jpg
     caption: Thermal Equipment Design and Optimization
     link: /research/thermal-equipment/
