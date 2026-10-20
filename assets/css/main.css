@@ -335,3 +335,11 @@ html[lang="en"] body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 #busuanzi_value_site_pv, #busuanzi_value_site_uv {
   margin: 0 4px; color: #FFB547; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; vertical-align: -1px;
 }
+
+/* 合作者：条目列表，不显示照片 */
+.collab-list { margin: 0; padding: 0; list-style: none; }
+.collab-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; padding: 14px 4px; border-bottom: 1px solid var(--line-soft); }
+.collab-name { min-width: 6em; color: var(--brand); font-size: 17px; font-weight: 700; }
+.collab-aff { color: var(--text); }
+.collab-research { color: var(--text-muted); font-size: 14.5px; }
+.collab-link { font-size: 14.5px; }
