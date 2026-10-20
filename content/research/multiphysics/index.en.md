@@ -1,13 +1,13 @@
 ---
-title: "Development and Application of Multiphysics Measurement Systems"
+title: Development and Application of Multiphysics Measurement Systems
 weight: 1
-cover: "cover.jpg"
-summary: "Measuring anisotropic thermophysical properties of micrometer-thick films; measuring thermoelectric properties and contact processes of micro/nanostructures; developing a scanning thermal microscopy system based on T-shaped thermal probes; measuring and modulating ultrafast energy transfer in semiconductor nanofilms."
+cover: fig03.png
+summary: Measuring anisotropic thermophysical properties of micrometer-thick films; measuring thermoelectric properties and contact processes of micro/nanostructures; developing a scanning thermal microscopy system based on T-shaped thermal probes; measuring and modulating ultrafast energy transfer in semiconductor nanofilms.
 topics:
-  - "Measuring Anisotropic Thermophysical Properties of Micrometer-Thick Films"
-  - "Measuring Thermoelectric Properties and Contact Processes of Micro/Nanostructures"
-  - "Development of a Scanning Thermal Microscopy System Based on T-Shaped Thermal Probes"
-  - "Measuring and Modulating Ultrafast Energy Transfer in Semiconductor Nanofilms"
+  - Measuring Anisotropic Thermophysical Properties of Micrometer-Thick Films
+  - Measuring Thermoelectric Properties and Contact Processes of Micro/Nanostructures
+  - Development of a Scanning Thermal Microscopy System Based on T-Shaped Thermal Probes
+  - Measuring and Modulating Ultrafast Energy Transfer in Semiconductor Nanofilms
 ---
 
 ## 1. Measuring Anisotropic Thermophysical Properties of Micrometer-Thick Films
