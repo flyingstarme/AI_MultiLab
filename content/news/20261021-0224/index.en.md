@@ -1,7 +1,7 @@
 ---
 title: The research group attended the Academic Conference on Heat and Mass Transfer of the Chinese Society of Engineering Thermophysics.
 date: 2026-10-21
-summary: ''
+summary: From October 16 to 19, Dr. Zhang Haoran and Dr. Niu Mengjiao from the research group attended the Chinese Society of Engineering Thermophysics Conference on Heat and Mass Transfer held in Xi’an.
 cover: 参加2026年传热传质会议.webp
 ---
 
