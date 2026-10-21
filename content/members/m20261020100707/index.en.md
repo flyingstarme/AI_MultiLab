@@ -5,7 +5,7 @@ role: ''
 grade: null
 research: ''
 affiliation: China University of Petroleum (Beijing) Vice Dean of the College of Mechanical and Transportation Engineering
-homepage: ''
+homepage: https://zhujj09.github.io/flip-site/
 photo: ''
 grad_year: null
 degree: ''
