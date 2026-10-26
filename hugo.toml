@@ -11,8 +11,11 @@ disableKinds = ["taxonomy", "term", "rss"]
 [params]
   # 页面上用黄色虚线框标出“待补充”的内容。正式上线、内容补齐后改成 false。
   showTodo = true
-  # 页脚显示访客统计（不蒜子）。不需要时改成 false。
+  # 页脚显示访客统计（Vercount，events.vercount.one，免费、无需注册）。不需要时改成 false。
   visitCounter = true
+  # 换用 Vercount 之前（不蒜子时期）已经累计的访问量和访客数，显示时加在 Vercount 的数字上
+  visitBasePV = 581
+  visitBaseUV = 160
 
 # 页面文件夹里的原图默认不发布，只发布模板实际用到的缩小版（WebP）
 [[cascade]]

@@ -332,7 +332,7 @@ html[lang="en"] body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI
 
 /* 页脚访客统计：字号加大，数字用醒目的橙黄色加粗 */
 .visit-stats { min-height: 1.6em; margin-top: 6px; color: #E3EAF4; font-size: 15px; }
-#busuanzi_value_site_pv, #busuanzi_value_site_uv {
+.visit-num {
   margin: 0 4px; color: #FFB547; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; vertical-align: -1px;
 }
 

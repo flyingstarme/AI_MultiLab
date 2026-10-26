@@ -10,9 +10,8 @@
       <p>© {{ now.Year }} {{ $name }}</p>
       <p>{{ T "last_updated" }}{{ T "colon" }}{{ now.Format "2006-01-02" }}</p>
       {{- if site.Params.visitCounter }}
-      <p class="visit-stats">
-        <span id="busuanzi_container_site_pv" style="display:none">{{ T "visits_pv" }}<span id="busuanzi_value_site_pv"></span>{{ T "visits_pv_after" }}</span>
-        <span id="busuanzi_container_site_uv" style="display:none">{{ T "visits_uv" }}<span id="busuanzi_value_site_uv"></span>{{ T "visits_uv_after" }}</span>
+      <p class="visit-stats" data-counter data-base-pv="{{ site.Params.visitBasePV | default 0 }}" data-base-uv="{{ site.Params.visitBaseUV | default 0 }}" hidden>
+        {{- T "visits_pv" }}<span class="visit-num" data-k="pv"></span>{{ T "visits_pv_after" }}{{ T "visits_uv" }}<span class="visit-num" data-k="uv"></span>{{ T "visits_uv_after" -}}
       </p>
       {{- end }}
       <p><a class="footer-admin" href="{{ "admin/" | relURL }}">{{ T "admin" }}</a></p>

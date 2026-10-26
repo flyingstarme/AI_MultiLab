@@ -178,6 +178,56 @@
     });
   }
 
+  // ---------- 页脚访客统计（Vercount） ----------
+  // 先显示本浏览器上次拿到的数字，再向 Vercount 请求最新数字；失败自动重试 3 次。
+  // 显示的数字 = Vercount 的计数 + hugo.toml 里的基数（换服务前不蒜子已累计的数）。
+  each(document.querySelectorAll('.visit-stats[data-counter]'), function (box) {
+    var basePv = parseInt(box.getAttribute('data-base-pv'), 10) || 0;
+    var baseUv = parseInt(box.getAttribute('data-base-uv'), 10) || 0;
+    var pvEl = box.querySelector('[data-k="pv"]');
+    var uvEl = box.querySelector('[data-k="uv"]');
+    var CACHE = 'ai-multilab-visits';
+    var show = function (d) {
+      pvEl.textContent = String((Number(d.site_pv) || 0) + basePv);
+      uvEl.textContent = String((Number(d.site_uv) || 0) + baseUv);
+      box.hidden = false;
+    };
+    try { var cached = JSON.parse(localStorage.getItem(CACHE) || 'null'); if (cached) show(cached); } catch (e) {}
+
+    // 只在正式网站上计数（本地预览、双击打开的离线页面不计数）
+    var host = location.hostname;
+    if (!/^https?:$/.test(location.protocol) || host === 'localhost' || host === '127.0.0.1') return;
+
+    // 同一浏览器一年内只算一个访客（与 Vercount 官方脚本相同的 cookie）
+    var cookieName = 'vercount_uv_' + location.host.replace(/[^a-zA-Z0-9_-]/g, '_');
+    var isNewUv = document.cookie.split('; ').indexOf(cookieName + '=1') < 0;
+    if (isNewUv) document.cookie = cookieName + '=1; path=/; max-age=31536000; samesite=lax';
+
+    var attempt = function (n) {
+      var ctrl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 8000);
+      fetch('https://events.vercount.one/api/v2/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: location.href, isNewUv: isNewUv && n === 1 }),
+        signal: ctrl ? ctrl.signal : undefined
+      }).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      }).then(function (j) {
+        clearTimeout(timer);
+        var d = (j && j.data) || j || {};
+        if (d.site_pv === undefined) throw new Error('bad data');
+        try { localStorage.setItem(CACHE, JSON.stringify({ site_pv: d.site_pv, site_uv: d.site_uv })); } catch (e) {}
+        show(d);
+      }).catch(function () {
+        clearTimeout(timer);
+        if (n < 3) setTimeout(function () { attempt(n + 1); }, 3000 * n);
+      });
+    };
+    attempt(1);
+  });
+
   // ---------- 论文按研究方向筛选 ----------
   each(document.querySelectorAll('.pub-filter'), function (bar) {
     var scope = document.querySelector(bar.getAttribute('data-target')) || document;

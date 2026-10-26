@@ -61,7 +61,7 @@ hugo.toml           网站配置（中英文菜单及子菜单、是否显示“
 
 - 正文里同一段的几张图片会并排显示，点击可以放大；单独一行的斜体文字（`*图：……*`）显示为图注。
 - 站点禁止正文里写原始 HTML。上标、下标请直接用 Unicode 字符，如 m²、10⁻⁸、Bi₂Te₃。
-- 页脚的访客统计用的是“不蒜子”（busuanzi.ibruce.info，免费、国内可访问），从 2026-10-20 开始计数；不需要时把 `hugo.toml` 里的 `visitCounter` 改成 `false`。
+- 页脚的访客统计用的是 Vercount（events.vercount.one，免费、无需注册，代码在 `assets/js/main.js`）。2026-10-26 从“不蒜子”换过来（不蒜子经常故障，数字时有时无）；换之前已累计的访问量写在 `hugo.toml` 的 `visitBasePV` / `visitBaseUV`，显示时加在 Vercount 的数字上。浏览器会记住上次的数字，统计服务短暂故障时仍能显示；本地预览不计数。不需要时把 `visitCounter` 改成 `false`。
 - 首页轮播会一直自动轮动，鼠标停在图片上时暂停。
 - 缺内容的地方用 `{{< todo "说明" >}}` 标出，页面上会显示黄色虚线框。内容补齐、正式上线前，把 `hugo.toml` 里的 `showTodo` 改成 `false`，这些框就都不显示了。
 
