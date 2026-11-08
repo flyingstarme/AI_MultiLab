@@ -8,3 +8,5 @@ cover: pasted-image-1793595168518.svg
 ---
 
 Our research group was invited to publish a review article titled "Representative Methods for Measuring the Anisotropic Thermal Properties of Micro-Scale Films" in <Review of Materials Research>, which outlines common methods and recent advancements in measuring the anisotropic thermal properties of thin films.
+
+Links: https://www.sciencedirect.com/science/article/pii/S3050913026002007
