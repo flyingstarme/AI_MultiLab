@@ -4,7 +4,7 @@ weight: 1
 cover: fig03.png
 summary: Measuring anisotropic thermophysical properties of micrometer-thick films; measuring thermoelectric properties and contact processes of micro/nanostructures; developing a scanning thermal microscopy system based on T-shaped thermal probes; measuring and modulating ultrafast energy transfer in semiconductor nanofilms.
 topics:
-  - Measuring Anisotropic Thermophysical Properties of Micrometer-Thick Films
+  - Measuring Anisotropic Thermophysical Properties and structural thermal resistance of thin films
   - Measuring Thermoelectric Properties and Contact Processes of Micro/Nanostructures
   - Development of a Scanning Thermal Microscopy System Based on T-Shaped Thermal Probes
   - Measuring and Modulating Ultrafast Energy Transfer in Semiconductor Nanofilms
